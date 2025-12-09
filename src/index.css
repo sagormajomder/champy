@@ -126,6 +126,6 @@
   @apply bg-transparent text-base-content;
 }
 
-.menu li a {
-  @apply py-2.5;
+.menu .navLink a {
+  @apply lg:py-2.5;
 }

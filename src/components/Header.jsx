@@ -1,17 +1,33 @@
+import toast from 'react-hot-toast';
 import { Link, NavLink } from 'react-router';
+import { useAuth } from '../contexts/AuthContext';
 import Container from './Container';
 
 export default function Header() {
+  const { user, setUser, signOutUser } = useAuth();
   const links = (
     <>
-      <li>
+      <li className='navLink'>
         <NavLink to='/'>Home</NavLink>
       </li>
-      <li>
+      <li className='navLink'>
         <NavLink to='/contests'>Contests</NavLink>
       </li>
     </>
   );
+
+  function handleLogout() {
+    signOutUser()
+      .then(() => {
+        toast.success('User logout successful!');
+        setUser(null);
+      })
+      .catch(error => {
+        console.log(error);
+        toast.error(error.message);
+      });
+  }
+
   return (
     <header className='bg-base-100 shadow-sm'>
       <Container>
@@ -44,7 +60,7 @@ export default function Header() {
                 {links}
               </ul>
             </div>
-            <Link className=' text-xl font-bold'>daisyUI</Link>
+            <Link className=' text-xl font-bold'>Champy</Link>
           </div>
           {/* Navbar Center */}
           <div className='navbar-center hidden lg:flex'>
@@ -52,9 +68,41 @@ export default function Header() {
           </div>
           {/* Navbar End */}
           <div className='navbar-end'>
-            <Link to='/auth/login' className='btn btn-primary'>
-              Login
-            </Link>
+            {!user && (
+              <Link to='/auth/login' className='btn btn-primary'>
+                Login
+              </Link>
+            )}
+
+            {user && (
+              <div className='dropdown dropdown-end'>
+                <div
+                  tabIndex={0}
+                  role='button'
+                  className='btn btn-ghost btn-circle avatar'>
+                  <div className='w-10 rounded-full'>
+                    <img alt={user.displayName} src={user.photoURL} />
+                  </div>
+                </div>
+                <ul
+                  tabIndex='-1'
+                  className='menu dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow-sm'>
+                  <li className='items-center border-b-2 mb-2'>
+                    <span className='text-lg font-semibold hover:bg-transparent active:text-base-content'>
+                      {user.displayName}
+                    </span>
+                  </li>
+                  <li className='mb-2'>
+                    <Link to='/dashboard'>Dashboard</Link>
+                  </li>
+                  <li>
+                    <button onClick={handleLogout} className='btn btn-primary'>
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </nav>
       </Container>
