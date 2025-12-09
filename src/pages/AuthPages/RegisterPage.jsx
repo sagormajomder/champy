@@ -111,7 +111,7 @@ export default function RegisterPage() {
   return (
     <section className='py-14'>
       <Container>
-        <h1 className='heading-primary '>Create an Account</h1>
+        <h1 className=' '>Create an Account</h1>
         <p className='ml-2 text-dark'>Register with Champy</p>
 
         {/* Form  */}
