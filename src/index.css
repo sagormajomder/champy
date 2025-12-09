@@ -1,0 +1,127 @@
+@import 'tailwindcss';
+@plugin "daisyui" {
+  themes: light --default;
+}
+/* @plugin "daisyui" {
+   themes: light --default, dark --prefersdark;
+ } */
+/* @plugin "daisyui/theme" {
+  name: 'light';
+  default: true;
+  --color-primary: #2563eb;
+  --color-secondary: #7c3aed;
+
+  --color-success: #10b981;
+  --color-warning: ;
+  --color-error: ;
+}
+@plugin "daisyui/theme" {
+  name: 'dark';
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+} */
+
+@theme inline {
+  --default-font-family: var(--font-inter);
+  --font-jakarta-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  /* --- LIGHT MODE (Default) --- */
+  :root {
+    --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+  :root {
+    color-scheme: light;
+
+    /* Primary (Royal Blue) */
+    --color-primary: oklch(55% 0.23 262);
+    --color-primary-content: oklch(100% 0 0);
+
+    /* Secondary (Violet) */
+    --color-secondary: oklch(51% 0.23 282);
+    --color-secondary-content: oklch(100% 0 0);
+
+    /* Accent (Fuchsia) */
+    --color-accent: oklch(64% 0.26 316);
+    --color-accent-content: oklch(100% 0 0);
+
+    /* Neutral (Slate) */
+    --color-neutral: oklch(27% 0.06 264);
+    --color-neutral-content: oklch(98% 0 0);
+
+    /* Base / Backgrounds (White & Slate White) */
+    --color-base-100: oklch(100% 0 0); /* Pure White Cards */
+    --color-base-200: oklch(97% 0.01 260); /* Page Background */
+    --color-base-300: oklch(92% 0.02 260); /* Borders */
+    --color-base-content: oklch(27% 0.06 264); /* Text Color */
+
+    /* Functional Colors */
+    --color-success: oklch(65% 0.18 150);
+    --color-warning: oklch(75% 0.16 70);
+    --color-error: oklch(60% 0.2 25);
+
+    /* Border Radius for a Modern Feel */
+    --radius-box: 0.75rem;
+    --radius-btn: 0.5rem;
+  }
+
+  /* --- DARK MODE --- */
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+
+    /* Primary (Bright Blue for Dark Mode) */
+    --color-primary: oklch(62% 0.2 260);
+    --color-primary-content: oklch(100% 0 0);
+
+    /* Secondary (Light Violet) */
+    --color-secondary: oklch(65% 0.2 280);
+    --color-secondary-content: oklch(100% 0 0);
+
+    /* Neutral (Dark Slate) */
+    --color-neutral: oklch(18% 0.04 260);
+
+    /* Base / Backgrounds (Deep Space) */
+    --color-base-100: oklch(16% 0.04 260); /* Page Background */
+    --color-base-200: oklch(22% 0.05 260); /* Card Background (Lighter) */
+    --color-base-300: oklch(30% 0.05 260); /* Borders */
+    --color-base-content: oklch(94% 0.02 260); /* Text Color */
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-jakarta-sans;
+  }
+
+  h1 {
+    @apply sm:text-[2.5rem] text-[2rem] font-bold;
+  }
+  h2 {
+    @apply sm:text-[2rem] text-[1.75rem] font-semibold;
+  }
+
+  h3 {
+    @apply sm:text-[1.75rem] text-[1.5rem] font-semibold;
+  }
+  h4 {
+    @apply sm:text-[1.5rem] text-[1.25rem] font-medium;
+  }
+  h5 {
+    @apply sm:text-[1.25rem] text-[1.125rem] font-medium;
+  }
+  h6 {
+    @apply sm:text-[1rem] text-[1rem] font-bold uppercase;
+  }
+}
+
+.active {
+  @apply underline underline-offset-6 decoration-2 decoration-primary;
+}
+
+.menu li a:active {
+  @apply bg-transparent text-base-content;
+}
