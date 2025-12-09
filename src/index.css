@@ -125,3 +125,7 @@
 .menu li a:active {
   @apply bg-transparent text-base-content;
 }
+
+.menu li a {
+  @apply py-2.5;
+}
