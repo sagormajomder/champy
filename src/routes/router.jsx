@@ -1,9 +1,12 @@
 import { createBrowserRouter } from 'react-router';
+import DashboardLayout from '../layouts/DashboardLayout';
 import RootLayout from '../layouts/RootLayout';
 import AllContestPage from '../pages/AllContestPage/AllContestPage';
 import LoginPage from '../pages/AuthPages/LoginPage';
 import RegisterPage from '../pages/AuthPages/RegisterPage';
+import AddContestPage from '../pages/DashboardPages/CreatorPages/AddContestPage';
 import HomePage from '../pages/HomePage/HomePage';
+import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +30,20 @@ const router = createBrowserRouter([
       {
         path: '/auth/register',
         Component: RegisterPage,
+      },
+    ],
+  },
+  {
+    path: 'dashboard',
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: 'add-contest',
+        Component: AddContestPage,
       },
     ],
   },
