@@ -1,20 +1,86 @@
+import axios from 'axios';
+import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import Loader from '../../../components/Loader';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useAxiosSecure } from '../../../hooks/useAxiosSecure';
 
 export default function AddContestPage() {
+  const [isCreated, setIsCreated] = useState(false);
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {
-      contestDeadline: new Date(),
+      contestDeadline: '',
     },
   });
 
-  function handleAddContest(data) {}
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  async function handleAddContest(data) {
+    setIsCreated(true);
+    const {
+      contestName,
+      contestImage,
+      contestDesc,
+      contestPrice,
+      contestPrize,
+      taskIns,
+      contestType,
+      contestDeadline,
+    } = data;
+
+    const imageFile = contestImage[0];
+
+    const formData = new FormData();
+    formData.append('image', imageFile);
+
+    const photoResult = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_IMGBB_HOST_KEY
+      }`,
+      formData
+    );
+    // console.log(photoResult);
+
+    const contestPhotoURL = photoResult.data.data.url;
+
+    const newContest = {
+      contestName,
+      contestPhotoURL,
+      contestDesc,
+      contestPrice,
+      contestPrize,
+      taskIns,
+      contestType,
+      contestDeadline,
+      contestStatus: 'pending',
+      creatorEmail: user.email,
+      creatorName: user.displayName,
+      creatorPhoto: user.photoURL,
+    };
+
+    const res = await axiosSecure.post('/contests', newContest);
+
+    // console.log(res);
+
+    if (res.data.insertedId) {
+      setIsCreated(false);
+      reset();
+      toast.success('Contest is created successfully!');
+    }
+  }
+
+  if (isCreated) return <Loader />;
+
   return (
     <section className=''>
       <h1 className=' '>Create Contest</h1>
@@ -169,8 +235,9 @@ export default function AddContestPage() {
           {/* Form Submit */}
           <button
             type='submit'
+            disabled={isCreated}
             className='btn btn-primary border-none text-dark mt-4'>
-            Register
+            Create Contest
           </button>
         </fieldset>
       </form>
