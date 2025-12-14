@@ -5,6 +5,7 @@ import AllContestPage from '../pages/AllContestPage/AllContestPage';
 import LoginPage from '../pages/AuthPages/LoginPage';
 import RegisterPage from '../pages/AuthPages/RegisterPage';
 import AddContestPage from '../pages/DashboardPages/CreatorPages/AddContestPage';
+import MyCreatedContestsPage from '../pages/DashboardPages/CreatorPages/MyCreatedContestsPage';
 import HomePage from '../pages/HomePage/HomePage';
 import PrivateRoute from './PrivateRoute';
 
@@ -41,9 +42,14 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      // Creator Role Pages
       {
         path: 'add-contest',
         Component: AddContestPage,
+      },
+      {
+        path: 'created-contests',
+        Component: MyCreatedContestsPage,
       },
     ],
   },

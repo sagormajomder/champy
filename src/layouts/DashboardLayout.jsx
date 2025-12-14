@@ -1,4 +1,5 @@
 import { GoHome } from 'react-icons/go';
+import { HiOutlinePencilAlt } from 'react-icons/hi';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { Link, Outlet } from 'react-router';
 
@@ -44,7 +45,7 @@ export default function DashboardLayout() {
         <div className='flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64'>
           {/* Sidebar content here */}
           <ul className='menu w-full grow'>
-            {/* List item */}
+            {/* Home */}
             <li>
               <Link
                 to='/'
@@ -56,7 +57,7 @@ export default function DashboardLayout() {
               </Link>
             </li>
 
-            {/* Our List link */}
+            {/* Add Contest */}
             <li>
               <Link
                 to='/dashboard/add-contest'
@@ -65,6 +66,19 @@ export default function DashboardLayout() {
                 {/*Add contest icon */}
                 <IoMdAddCircleOutline className='text-xl' />
                 <span className='is-drawer-close:hidden'>Add Contest</span>
+              </Link>
+            </li>
+            {/* Creator Created Contests */}
+            <li>
+              <Link
+                to='/dashboard/created-contests'
+                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                data-tip='My Created Contests'>
+                {/*Add contest icon */}
+                <HiOutlinePencilAlt className='text-xl' />
+                <span className='is-drawer-close:hidden'>
+                  My Created Contests
+                </span>
               </Link>
             </li>
 
