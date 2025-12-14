@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 import Loader from '../../../components/Loader';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -7,11 +8,15 @@ import { useAxiosSecure } from '../../../hooks/useAxiosSecure';
 export default function MyCreatedContestsPage() {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { isPending, data: contests = [] } = useQuery({
+
+  const {
+    isPending,
+    data: contests = [],
+    refetch,
+  } = useQuery({
     queryKey: ['contests', user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/contests?email=${user?.email}`);
-
       return res.data;
     },
   });
@@ -19,6 +24,14 @@ export default function MyCreatedContestsPage() {
   // console.log(contests);
 
   if (isPending) return <Loader />;
+
+  async function handleContestDelete(id) {
+    const res = await axiosSecure.delete(`/contests/${id}`);
+    if (res.data.acknowledged) {
+      toast.success('Contest is Deleted Successfully!');
+      refetch();
+    }
+  }
 
   return (
     <section>
@@ -80,7 +93,11 @@ export default function MyCreatedContestsPage() {
                           className='btn btn-primary'>
                           Edit
                         </Link>
-                        <button className='btn btn-secondary'>Delete</button>
+                        <button
+                          onClick={() => handleContestDelete(_id)}
+                          className='btn btn-secondary'>
+                          Delete
+                        </button>
                       </>
                     )}
                   </td>

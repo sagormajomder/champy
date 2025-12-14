@@ -4,12 +4,14 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 import Loader from '../../../components/Loader';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useAxiosSecure } from '../../../hooks/useAxiosSecure';
 
 export default function AddContestPage() {
   const [isCreated, setIsCreated] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,7 +20,7 @@ export default function AddContestPage() {
     reset,
   } = useForm({
     defaultValues: {
-      contestDeadline: '',
+      contestDeadline: new Date().toDateString(),
     },
   });
 
@@ -76,6 +78,7 @@ export default function AddContestPage() {
       setIsCreated(false);
       reset();
       toast.success('Contest is created successfully!');
+      navigate('/dashboard/created-contests');
     }
   }
 
