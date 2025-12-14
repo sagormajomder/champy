@@ -1,32 +1,48 @@
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router';
 import Loader from '../../../components/Loader';
-import { useAuth } from '../../../contexts/AuthContext';
 import { useAxiosSecure } from '../../../hooks/useAxiosSecure';
 
-export default function AddContestPage() {
-  const [isCreated, setIsCreated] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-  } = useForm({
-    defaultValues: {
-      contestDeadline: '',
+export default function EditContestPage() {
+  const [isUpdated, setIsUpdated] = useState(false);
+  const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
+  const { data: contest = {}, isPending } = useQuery({
+    queryKey: ['contest', id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/contests/${id}`);
+      return res.data;
     },
   });
 
-  const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    reset,
+  } = useForm();
 
-  async function handleAddContest(data) {
-    setIsCreated(true);
+  const {
+    contestName,
+    contestPhotoURL,
+    contestDesc,
+    contestPrice,
+    contestPrize,
+    taskIns,
+    contestType,
+    contestDeadline,
+  } = contest;
+
+  async function handleEditContest(data) {
+    setIsUpdated(true);
     const {
       contestName,
       contestImage,
@@ -49,11 +65,10 @@ export default function AddContestPage() {
       }`,
       formData
     );
-    // console.log(photoResult);
 
     const contestPhotoURL = photoResult.data.data.url;
 
-    const newContest = {
+    const updateContest = {
       contestName,
       contestPhotoURL,
       contestDesc,
@@ -62,31 +77,26 @@ export default function AddContestPage() {
       taskIns,
       contestType,
       contestDeadline,
-      contestStatus: 'pending',
-      creatorEmail: user.email,
-      creatorName: user.displayName,
-      creatorPhoto: user.photoURL,
     };
 
-    const res = await axiosSecure.post('/contests', newContest);
-
+    const res = await axiosSecure.patch(`/contests/${id}`, updateContest);
     // console.log(res);
 
-    if (res.data.insertedId) {
-      setIsCreated(false);
+    if (res.data.acknowledged) {
+      setIsUpdated(false);
       reset();
-      toast.success('Contest is created successfully!');
+      toast.success('Contest is updated successfully!');
+      navigate('/dashboard/created-contests');
     }
   }
 
-  if (isCreated) return <Loader />;
-
+  if (isPending) return <Loader />;
   return (
     <section className=''>
-      <h1 className=' '>Create Contest</h1>
+      <h1 className=' '>Edit Contest</h1>
       <form
         className='card-body px-0 pb-1'
-        onSubmit={handleSubmit(handleAddContest)}>
+        onSubmit={handleSubmit(handleEditContest)}>
         <fieldset className='fieldset'>
           {/* Contest Name */}
           <label htmlFor='c-name' className='label'>
@@ -98,6 +108,7 @@ export default function AddContestPage() {
             className='input w-full'
             placeholder='Contest Name'
             id='c-name'
+            defaultValue={contestName}
           />
           {errors.contestName?.type === 'required' && (
             <span className='text-red-400'>Contest Name is required!</span>
@@ -127,7 +138,8 @@ export default function AddContestPage() {
             className='textarea w-full'
             placeholder='Contest Description'
             id='c-desc'
-            {...register('contestDesc', { required: true })}></textarea>
+            {...register('contestDesc', { required: true })}
+            defaultValue={contestDesc}></textarea>
 
           {errors.contestDesc?.type === 'required' && (
             <span className='text-red-400'>
@@ -145,6 +157,7 @@ export default function AddContestPage() {
             placeholder='Contest Price'
             {...register('contestPrice', { required: true })}
             id='c-price'
+            defaultValue={contestPrice}
           />
 
           {errors.contestPrice?.type === 'required' && (
@@ -161,6 +174,7 @@ export default function AddContestPage() {
             placeholder='Prize Money'
             {...register('contestPrize', { required: true })}
             id='c-prize'
+            defaultValue={contestPrize}
           />
 
           {errors.contestPrize?.type === 'required' && (
@@ -178,7 +192,8 @@ export default function AddContestPage() {
             className='textarea w-full'
             placeholder='Task Instruction'
             id='c-task'
-            {...register('taskIns', { required: true })}></textarea>
+            {...register('taskIns', { required: true })}
+            defaultValue={taskIns}></textarea>
 
           {errors.taskIns?.type === 'required' && (
             <span className='text-red-400'>
@@ -191,7 +206,7 @@ export default function AddContestPage() {
             Contest Type
           </label>
           <select
-            defaultValue=''
+            defaultValue={contestType}
             className='select w-full'
             id='c-type'
             {...register('contestType', { required: true })}>
@@ -215,6 +230,7 @@ export default function AddContestPage() {
             control={control}
             name='contestDeadline'
             rules={{ required: true }}
+            defaultValue={new Date(contestDeadline)}
             render={({ field }) => (
               <DatePicker
                 showIcon
@@ -237,9 +253,9 @@ export default function AddContestPage() {
           {/* Form Submit */}
           <button
             type='submit'
-            disabled={isCreated}
+            disabled={isUpdated}
             className='btn btn-primary border-none text-dark mt-4'>
-            Create Contest
+            Update Contest
           </button>
         </fieldset>
       </form>

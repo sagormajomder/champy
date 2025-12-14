@@ -5,6 +5,7 @@ import AllContestPage from '../pages/AllContestPage/AllContestPage';
 import LoginPage from '../pages/AuthPages/LoginPage';
 import RegisterPage from '../pages/AuthPages/RegisterPage';
 import AddContestPage from '../pages/DashboardPages/CreatorPages/AddContestPage';
+import EditContestPage from '../pages/DashboardPages/CreatorPages/EditContestPage';
 import MyCreatedContestsPage from '../pages/DashboardPages/CreatorPages/MyCreatedContestsPage';
 import HomePage from '../pages/HomePage/HomePage';
 import PrivateRoute from './PrivateRoute';
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: 'created-contests',
         Component: MyCreatedContestsPage,
+      },
+      {
+        path: 'edit-contest/:id',
+        Component: EditContestPage,
       },
     ],
   },

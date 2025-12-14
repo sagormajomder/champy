@@ -42,6 +42,7 @@ export default function MyCreatedContestsPage() {
           <tbody>
             {contests.map((contest, i) => {
               const {
+                _id,
                 contestName,
                 contestType,
                 contestStatus,
@@ -74,7 +75,11 @@ export default function MyCreatedContestsPage() {
                       <Link className='btn btn-primary '>See Submission</Link>
                     ) : (
                       <>
-                        <Link className='btn btn-primary'>Edit</Link>
+                        <Link
+                          to={`/dashboard/edit-contest/${_id}`}
+                          className='btn btn-primary'>
+                          Edit
+                        </Link>
                         <button className='btn btn-secondary'>Delete</button>
                       </>
                     )}
