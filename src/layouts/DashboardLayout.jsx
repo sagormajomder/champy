@@ -1,6 +1,7 @@
 import { GoHome } from 'react-icons/go';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 import { IoMdAddCircleOutline } from 'react-icons/io';
+import { LuUsers } from 'react-icons/lu';
 import { Link, Outlet } from 'react-router';
 
 export default function DashboardLayout() {
@@ -79,6 +80,18 @@ export default function DashboardLayout() {
                 <span className='is-drawer-close:hidden'>
                   My Created Contests
                 </span>
+              </Link>
+            </li>
+
+            {/* Manage Users */}
+            <li>
+              <Link
+                to='/dashboard/manage-users'
+                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                data-tip='Manage Users'>
+                {/*Add contest icon */}
+                <LuUsers className='text-xl' />
+                <span className='is-drawer-close:hidden'>Manage Users</span>
               </Link>
             </li>
 
