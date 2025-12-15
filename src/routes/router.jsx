@@ -4,6 +4,7 @@ import RootLayout from '../layouts/RootLayout';
 import AllContestPage from '../pages/AllContestPage/AllContestPage';
 import LoginPage from '../pages/AuthPages/LoginPage';
 import RegisterPage from '../pages/AuthPages/RegisterPage';
+import ManageContestPage from '../pages/DashboardPages/AdminPages/ManageContestPage';
 import ManageUsersPage from '../pages/DashboardPages/AdminPages/ManageUsersPage';
 import AddContestPage from '../pages/DashboardPages/CreatorPages/AddContestPage';
 import EditContestPage from '../pages/DashboardPages/CreatorPages/EditContestPage';
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: 'manage-users',
         Component: ManageUsersPage,
+      },
+      {
+        path: 'manage-contests',
+        Component: ManageContestPage,
       },
     ],
   },

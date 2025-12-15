@@ -1,29 +1,33 @@
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router';
 import Loader from '../../../components/Loader';
-import { useAuth } from '../../../contexts/AuthContext';
 import { useAxiosSecure } from '../../../hooks/useAxiosSecure';
 
-export default function MyCreatedContestsPage() {
-  const { user } = useAuth();
+export default function ManageContestPage() {
   const axiosSecure = useAxiosSecure();
-
   const {
     isPending,
     data: contests = [],
     refetch,
   } = useQuery({
-    queryKey: ['contests', user?.email],
+    queryKey: ['all-contest'],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/contests?email=${user?.email}`);
+      const res = await axiosSecure.get('/contests');
       return res.data;
     },
   });
-
   // console.log(contests);
 
-  if (isPending) return <Loader />;
+  async function handleContestStatus(id, status) {
+    const statusInfo = { contestStatus: status };
+    const res = await axiosSecure.patch(`/contests/${id}`, statusInfo);
+    console.log(res);
+
+    if (res.data.acknowledged) {
+      toast.success('Contest status is updated successfully!');
+      refetch();
+    }
+  }
 
   async function handleContestDelete(id) {
     const res = await axiosSecure.delete(`/contests/${id}`);
@@ -33,22 +37,26 @@ export default function MyCreatedContestsPage() {
     }
   }
 
+  if (isPending) return <Loader />;
+
   return (
     <section>
-      <h1 className='mb-6'>My Created Contests</h1>
-      {/* Table */}
+      <h1>Contest List</h1>
+
       <div className='overflow-x-auto rounded-box border border-base-content/5 bg-base-100'>
         <table className='table'>
           {/* head */}
           <thead>
             <tr>
               <th>SL.</th>
-              <th>Name</th>
+              <th>Contest Name</th>
               <th>Type</th>
-              <th>Status</th>
-              <th>Fee</th>
-              <th>Prize</th>
+              {/* <th>Description</th>
+              <th>Task</th> */}
+              <th>Entry Fee</th>
+              <th>Prize Money</th>
               <th>Deadline</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -58,16 +66,23 @@ export default function MyCreatedContestsPage() {
                 _id,
                 contestName,
                 contestType,
-                contestStatus,
+                contestDesc,
+                taskIns,
                 contestPrice,
                 contestPrize,
                 contestDeadline,
+                contestStatus,
               } = contest;
               return (
                 <tr key={i}>
                   <th>{i + 1}</th>
                   <td>{contestName}</td>
                   <td>{contestType.split('_').join(' ').toUpperCase()}</td>
+                  {/* <td>{contestDesc}</td>
+                  <td>{taskIns}</td> */}
+                  <td>{contestPrice}</td>
+                  <td>{contestPrize}</td>
+                  <td>{new Date(contestDeadline).toLocaleDateString()}</td>
                   <td>
                     <span
                       className={`badge ${
@@ -80,25 +95,27 @@ export default function MyCreatedContestsPage() {
                       {contestStatus.toUpperCase()}
                     </span>
                   </td>
-                  <td>TK {contestPrice}</td>
-                  <td>TK {contestPrize}</td>
-                  <td>{new Date(contestDeadline).toLocaleDateString()}</td>
-                  <td className='flex gap-2 flex-col lg:flex-row justify-center lg:justify-start'>
-                    {contestStatus === 'confirmed' ? (
-                      <Link className='btn btn-primary '>See Submission</Link>
-                    ) : (
-                      <>
-                        <Link
-                          to={`/dashboard/edit-contest/${_id}`}
-                          className='btn btn-primary'>
-                          Edit
-                        </Link>
+                  <td>
+                    {contestStatus === 'pending' ? (
+                      <div className='flex gap-2 '>
+                        <button
+                          onClick={() => handleContestStatus(_id, 'confirmed')}
+                          className='btn btn-primary '>
+                          Confirm
+                        </button>
+                        <button
+                          onClick={() => handleContestStatus(_id, 'rejected')}
+                          className='btn btn-error'>
+                          Reject
+                        </button>
                         <button
                           onClick={() => handleContestDelete(_id)}
-                          className='btn btn-secondary'>
+                          className='btn btn-warning'>
                           Delete
                         </button>
-                      </>
+                      </div>
+                    ) : (
+                      <p>--</p>
                     )}
                   </td>
                 </tr>

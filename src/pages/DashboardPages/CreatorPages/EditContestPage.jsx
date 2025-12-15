@@ -77,6 +77,7 @@ export default function EditContestPage() {
       taskIns,
       contestType,
       contestDeadline,
+      contestStatus: 'pending',
     };
 
     const res = await axiosSecure.patch(`/contests/${id}`, updateContest);
