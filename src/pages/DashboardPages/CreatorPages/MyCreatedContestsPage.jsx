@@ -64,7 +64,7 @@ export default function MyCreatedContestsPage() {
                 contestDeadline,
               } = contest;
               return (
-                <tr key={i}>
+                <tr key={_id}>
                   <th>{i + 1}</th>
                   <td>{contestName}</td>
                   <td>{contestType.split('_').join(' ').toUpperCase()}</td>

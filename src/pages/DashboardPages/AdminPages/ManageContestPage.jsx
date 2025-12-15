@@ -10,7 +10,7 @@ export default function ManageContestPage() {
     data: contests = [],
     refetch,
   } = useQuery({
-    queryKey: ['all-contest'],
+    queryKey: ['contests'],
     queryFn: async () => {
       const res = await axiosSecure.get('/contests');
       return res.data;
@@ -74,7 +74,7 @@ export default function ManageContestPage() {
                 contestStatus,
               } = contest;
               return (
-                <tr key={i}>
+                <tr key={_id}>
                   <th>{i + 1}</th>
                   <td>{contestName}</td>
                   <td>{contestType.split('_').join(' ').toUpperCase()}</td>
