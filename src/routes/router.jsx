@@ -4,6 +4,7 @@ import RootLayout from '../layouts/RootLayout';
 import AllContestPage from '../pages/AllContestPage/AllContestPage';
 import LoginPage from '../pages/AuthPages/LoginPage';
 import RegisterPage from '../pages/AuthPages/RegisterPage';
+import ContestDetailsPage from '../pages/ContestDetailsPage/ContestDetailsPage';
 import ManageContestPage from '../pages/DashboardPages/AdminPages/ManageContestPage';
 import ManageUsersPage from '../pages/DashboardPages/AdminPages/ManageUsersPage';
 import AddContestPage from '../pages/DashboardPages/CreatorPages/AddContestPage';
@@ -24,6 +25,15 @@ const router = createBrowserRouter([
       {
         path: '/contests',
         Component: AllContestPage,
+      },
+
+      {
+        path: '/contest-details/:id',
+        element: (
+          <PrivateRoute>
+            <ContestDetailsPage />
+          </PrivateRoute>
+        ),
       },
 
       // Auth Pages
