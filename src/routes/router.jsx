@@ -11,6 +11,8 @@ import AddContestPage from '../pages/DashboardPages/CreatorPages/AddContestPage'
 import EditContestPage from '../pages/DashboardPages/CreatorPages/EditContestPage';
 import MyCreatedContestsPage from '../pages/DashboardPages/CreatorPages/MyCreatedContestsPage';
 import HomePage from '../pages/HomePage/HomePage';
+import PaymentCancelled from '../pages/PaymentCancelled';
+import PaymentSuccess from '../pages/PaymentSuccess';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -32,6 +34,25 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ContestDetailsPage />
+          </PrivateRoute>
+        ),
+      },
+
+      // Payment Pages
+
+      {
+        path: '/payment-success',
+        element: (
+          <PrivateRoute>
+            <PaymentSuccess />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/payment-cancelled',
+        element: (
+          <PrivateRoute>
+            <PaymentCancelled />
           </PrivateRoute>
         ),
       },

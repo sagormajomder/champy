@@ -1,8 +1,19 @@
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import { useAuth } from '../../contexts/AuthContext';
+import { useAxiosSecure } from '../../hooks/useAxiosSecure';
 import { daysRemainingFunc } from '../../utils/utils';
 
 export default function ContestStatusInfo({ contest }) {
-  const { contestDeadline, participatedCount, submissionCount } = contest;
+  const { user } = useAuth();
+  const {
+    _id,
+    contestName,
+    contestPrice,
+    contestDeadline,
+    participatedCount,
+    submissionCount,
+  } = contest;
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,
     hours: 0,
@@ -41,9 +52,39 @@ export default function ContestStatusInfo({ contest }) {
 
   const formatTime = num => String(num).padStart(2, '0');
 
+  const axiosSecure = useAxiosSecure();
+
+  function handleContestRegister() {
+    Swal.fire({
+      title: 'Are you sure to join the contest?',
+      text: `You will be charged TK ${contestPrice}!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3480fc',
+      cancelButtonColor: '#de3b3d',
+      confirmButtonText: 'Yes, continue payment & join it! ',
+    }).then(result => {
+      if (result.isConfirmed) {
+        const paymentInfo = {
+          contestId: _id,
+          contestName,
+          contestPrice,
+          participatorEmail: user.email,
+        };
+
+        axiosSecure
+          .post(`/create-checkout-session`, paymentInfo)
+          .then(result => {
+            const { url } = result.data;
+            window.location.href = url;
+          });
+      }
+    });
+  }
+
   return (
     <div className='bg-base-100 rounded-xl p-6 shadow-lg border border-base-300'>
-      {/* Status Header */}
+      {/* Status Info */}
       <div className='flex items-center gap-2 mb-6'>
         <span className='text-sm font-medium text-base-content'>Status</span>
         <span
@@ -94,12 +135,14 @@ export default function ContestStatusInfo({ contest }) {
       </div>
 
       {/* Register Contest Button */}
-      <button className='btn btn-primary mb-1.5 w-full font-jakarta-sans'>
+      <button
+        onClick={handleContestRegister}
+        className='btn btn-primary mb-1.5 w-full font-jakarta-sans'>
         Register Contest
         <span className='text-lg'>→</span>
       </button>
 
-      {/* Subscription Info */}
+      {/* Contest Closes Info */}
       <p className='text-center text-xs text-base-content/60 mb-6 font-medium'>
         Contest closes{' '}
         {new Date(contestDeadline).toLocaleDateString('en-BD', {
@@ -109,7 +152,7 @@ export default function ContestStatusInfo({ contest }) {
         })}
       </p>
 
-      {/* Statistics Footer */}
+      {/* Statistics Info */}
       <div className='flex gap-6 pt-6 border-t border-base-300'>
         <div className='flex-1'>
           <div className='text-2xl font-bold text-primary font-jakarta-sans'>
