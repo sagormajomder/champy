@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { IoHomeOutline } from 'react-icons/io5';
 import { Link, useSearchParams } from 'react-router';
 import Container from '../components/Container';
+import Loader from '../components/Loader';
 import { useAxiosSecure } from '../hooks/useAxiosSecure';
 import paymentErrorSVG from './../assets/payment-error.svg';
 
@@ -10,7 +11,7 @@ export default function PaymentCancelled() {
   const axiosSecure = useAxiosSecure();
   const sessionId = searchParams.get('session_id');
 
-  const { data: contestId = null } = useQuery({
+  const { data: contestId = null, isPending } = useQuery({
     queryKey: [sessionId],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -20,6 +21,8 @@ export default function PaymentCancelled() {
       return res.data.contestId;
     },
   });
+
+  if (isPending) return <Loader />;
 
   return (
     <section className='py-14'>
