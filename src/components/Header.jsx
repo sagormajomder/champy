@@ -29,7 +29,7 @@ export default function Header() {
   }
 
   return (
-    <header className='bg-base-100 shadow-sm sticky top-0'>
+    <header className='bg-base-100 shadow-sm sticky top-0 z-10'>
       <Container>
         <nav className='navbar'>
           {/* Navbar Start */}

@@ -64,6 +64,8 @@ export default function AddContestPage() {
       taskIns,
       contestType,
       contestDeadline,
+      participatedCount: 0,
+      submissionCount: 0,
       contestStatus: 'pending',
       creatorEmail: user.email,
       creatorName: user.displayName,

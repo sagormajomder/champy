@@ -9,12 +9,12 @@ export default function ContestCard({ contest }) {
     contestName,
     contestType,
     contestDesc,
-    participateCount = 10,
+    participatedCount = 10,
     contestDeadline,
   } = contest;
 
   return (
-    <div className='rounded-lg shadow-xl flex flex-col justify-between'>
+    <div className='rounded-xl shadow-xl flex flex-col justify-between bg-base-200'>
       <div>
         <img
           className='h-62.5 w-full object-cover rounded-t-lg'
@@ -31,7 +31,7 @@ export default function ContestCard({ contest }) {
           <div className='flex justify-between items-center mb-3'>
             <div className='flex gap-1 items-center'>
               <FiUsers className='text-primary text-lg' />
-              <span>{participateCount}</span>
+              <span>{participatedCount}</span>
             </div>
             <div className='flex gap-1 items-center'>
               <TbHistoryToggle className='text-primary text-xl' />

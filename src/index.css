@@ -24,6 +24,8 @@
 @theme inline {
   --default-font-family: var(--font-inter);
   --font-jakarta-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --breakpoint-xs: 30rem;
 }
 
 @layer base {
