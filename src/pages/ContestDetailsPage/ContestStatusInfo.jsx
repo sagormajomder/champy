@@ -49,6 +49,18 @@ export default function ContestStatusInfo({ contest }) {
 
   // get participate task submit info
 
+  const { data: submittedTask = null } = useQuery({
+    queryKey: ['submissions', _id, user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/submissions?contestId=${_id}&email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
+
+  // console.log(submittedTask);
+
   const isActive =
     timeRemaining.days > 0 ||
     timeRemaining.hours > 0 ||
@@ -191,7 +203,17 @@ export default function ContestStatusInfo({ contest }) {
       </div>
 
       {/* Register Contest Button */}
-      {payment && (
+      {!payment && !submittedTask && (
+        <button
+          onClick={handleContestRegister}
+          disabled={!isActive}
+          className='btn btn-primary mb-1.5 w-full font-jakarta-sans'>
+          {isActive ? 'Register Contest' : 'Contest Ended'}
+          {isActive && <span className='text-lg'>→</span>}
+        </button>
+      )}
+
+      {payment && !submittedTask && (
         <button
           onClick={() => setIsTaskModalOpen(true)}
           disabled={!isActive}
@@ -201,13 +223,11 @@ export default function ContestStatusInfo({ contest }) {
         </button>
       )}
 
-      {!payment && (
+      {payment && submittedTask && (
         <button
-          onClick={handleContestRegister}
-          disabled={!isActive}
+          disabled={true}
           className='btn btn-primary mb-1.5 w-full font-jakarta-sans'>
-          {isActive ? 'Register Contest' : 'Contest Ended'}
-          {isActive && <span className='text-lg'>→</span>}
+          Already Submitted
         </button>
       )}
 
