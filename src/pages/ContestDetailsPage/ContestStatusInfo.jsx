@@ -1,11 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAxiosSecure } from '../../hooks/useAxiosSecure';
 import { daysRemainingFunc } from '../../utils/utils';
 
 export default function ContestStatusInfo({ contest }) {
+  const [isCreated, setIsCreated] = useState(false);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const taskModalRef = useRef(null);
+
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
   const {
     _id,
     contestName,
@@ -21,6 +36,25 @@ export default function ContestStatusInfo({ contest }) {
     seconds: 0,
   });
 
+  // get participate info
+  const { data: payment = null } = useQuery({
+    queryKey: ['payments', _id, user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/payments?contestId=${_id}&email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
+
+  // get participate task submit info
+
+  const isActive =
+    timeRemaining.days > 0 ||
+    timeRemaining.hours > 0 ||
+    timeRemaining.minutes > 0;
+
+  // Calculate CountDown
   useEffect(() => {
     const calculateTimeRemaining = () => {
       const now = new Date();
@@ -41,18 +75,20 @@ export default function ContestStatusInfo({ contest }) {
     };
 
     calculateTimeRemaining();
-    const interval = setInterval(calculateTimeRemaining, 1000);
+    const interval = setInterval(calculateTimeRemaining, 10000);
     return () => clearInterval(interval);
   }, [contestDeadline]);
 
-  const isActive =
-    timeRemaining.days > 0 ||
-    timeRemaining.hours > 0 ||
-    timeRemaining.minutes > 0;
+  // handle modal open and close
+  useEffect(() => {
+    const dialog = taskModalRef.current;
+    if (!dialog) return;
+
+    if (isTaskModalOpen && !dialog.open) dialog.showModal();
+    if (!isTaskModalOpen && dialog.open) dialog.close();
+  }, [isTaskModalOpen]);
 
   const formatTime = num => String(num).padStart(2, '0');
-
-  const axiosSecure = useAxiosSecure();
 
   function handleContestRegister() {
     Swal.fire({
@@ -69,7 +105,7 @@ export default function ContestStatusInfo({ contest }) {
           contestId: _id,
           contestName,
           contestPrice,
-          participatorEmail: user.email,
+          participatorEmail: user?.email,
         };
 
         axiosSecure
@@ -80,6 +116,26 @@ export default function ContestStatusInfo({ contest }) {
           });
       }
     });
+  }
+
+  async function handleTaskSubmit(data) {
+    setIsCreated(true);
+    const newTaskSubmission = {
+      contestId: _id,
+      participatorName: user?.displayName,
+      participatorEmail: user?.email,
+      submittedTask: data.taskContent,
+    };
+
+    const res = await axiosSecure.post('/submissions', newTaskSubmission);
+    console.log(res);
+
+    if (res.data.insertedId) {
+      reset();
+      setIsCreated(false);
+      toast.success('Successfully Task Submitted!');
+      setIsTaskModalOpen(false);
+    }
   }
 
   return (
@@ -135,12 +191,52 @@ export default function ContestStatusInfo({ contest }) {
       </div>
 
       {/* Register Contest Button */}
-      <button
-        onClick={handleContestRegister}
-        className='btn btn-primary mb-1.5 w-full font-jakarta-sans'>
-        Register Contest
-        <span className='text-lg'>→</span>
-      </button>
+      {payment && (
+        <button
+          onClick={() => setIsTaskModalOpen(true)}
+          disabled={!isActive}
+          className='btn btn-primary mb-1.5 w-full font-jakarta-sans'>
+          {isActive ? 'Submit contest task' : 'Contest Ended'}
+          {isActive && <span className='text-lg'>→</span>}
+        </button>
+      )}
+
+      {!payment && (
+        <button
+          onClick={handleContestRegister}
+          disabled={!isActive}
+          className='btn btn-primary mb-1.5 w-full font-jakarta-sans'>
+          {isActive ? 'Register Contest' : 'Contest Ended'}
+          {isActive && <span className='text-lg'>→</span>}
+        </button>
+      )}
+
+      {/* Submit Task Modal */}
+      <dialog ref={taskModalRef} className='modal modal-bottom sm:modal-middle'>
+        <div className='modal-box'>
+          <form
+            className='flex flex-col gap-4'
+            onSubmit={handleSubmit(handleTaskSubmit)}>
+            <textarea
+              className='textarea w-full'
+              {...register('taskContent', { required: true })}></textarea>
+            {errors.taskContent?.type === 'required' && (
+              <span className='text-error'>Task Information is required!</span>
+            )}
+            <div className='flex justify-between items-center'>
+              <button disabled={isCreated} className='btn btn-primary'>
+                Submit
+              </button>
+              <button
+                type='button'
+                onClick={() => setIsTaskModalOpen(false)}
+                className='btn btn-outline btn-primary'>
+                Close
+              </button>
+            </div>
+          </form>
+        </div>
+      </dialog>
 
       {/* Contest Closes Info */}
       <p className='text-center text-xs text-base-content/60 mb-6 font-medium'>
