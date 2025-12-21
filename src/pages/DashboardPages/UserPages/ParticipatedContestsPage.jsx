@@ -30,6 +30,7 @@ export default function ParticipatedContestsPage() {
           <thead>
             <tr>
               <th>SL.</th>
+              <th>Image</th>
               <th>Name</th>
               <th>Type</th>
               <th>Prize</th>
@@ -43,6 +44,7 @@ export default function ParticipatedContestsPage() {
             {contests.map((contest, i) => {
               const {
                 _id,
+                contestPhotoURL,
                 contestName,
                 contestType,
                 contestPrice,
@@ -52,6 +54,13 @@ export default function ParticipatedContestsPage() {
               return (
                 <tr key={_id}>
                   <th>{i + 1}</th>
+                  <th>
+                    <img
+                      className='w-15 h-15 object-cover '
+                      src={contestPhotoURL}
+                      alt={contestName}
+                    />
+                  </th>
                   <td>{contestName}</td>
                   <td>{contestType.split('_').join(' ').toUpperCase()}</td>
                   <td>TK {contestPrize}</td>

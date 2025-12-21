@@ -49,7 +49,8 @@ export default function ManageContestPage() {
           <thead>
             <tr>
               <th>SL.</th>
-              <th>Contest Name</th>
+              <th>Image</th>
+              <th>Name</th>
               <th>Type</th>
               {/* <th>Description</th>
               <th>Task</th> */}
@@ -65,6 +66,7 @@ export default function ManageContestPage() {
               const {
                 _id,
                 contestName,
+                contestPhotoURL,
                 contestType,
                 contestDesc,
                 taskIns,
@@ -76,6 +78,13 @@ export default function ManageContestPage() {
               return (
                 <tr key={_id}>
                   <th>{i + 1}</th>
+                  <th>
+                    <img
+                      className='w-15 h-15 object-cover '
+                      src={contestPhotoURL}
+                      alt={contestName}
+                    />
+                  </th>
                   <td>{contestName}</td>
                   <td>{contestType.split('_').join(' ').toUpperCase()}</td>
                   {/* <td>{contestDesc}</td>

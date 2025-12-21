@@ -43,6 +43,7 @@ export default function MyCreatedContestsPage() {
           <thead>
             <tr>
               <th>SL.</th>
+              <th>Image</th>
               <th>Name</th>
               <th>Type</th>
               <th>Status</th>
@@ -56,6 +57,7 @@ export default function MyCreatedContestsPage() {
             {contests.map((contest, i) => {
               const {
                 _id,
+                contestPhotoURL,
                 contestName,
                 contestType,
                 contestStatus,
@@ -66,6 +68,13 @@ export default function MyCreatedContestsPage() {
               return (
                 <tr key={_id}>
                   <th>{i + 1}</th>
+                  <th>
+                    <img
+                      className='w-15 h-15 object-cover '
+                      src={contestPhotoURL}
+                      alt={contestName}
+                    />
+                  </th>
                   <td>{contestName}</td>
                   <td>{contestType.split('_').join(' ').toUpperCase()}</td>
                   <td>
@@ -83,7 +92,7 @@ export default function MyCreatedContestsPage() {
                   <td>TK {contestPrice}</td>
                   <td>TK {contestPrize}</td>
                   <td>{new Date(contestDeadline).toLocaleDateString()}</td>
-                  <td className='flex gap-2 flex-col lg:flex-row justify-center lg:justify-start'>
+                  <td className=''>
                     {contestStatus === 'confirmed' ? (
                       <Link
                         to={`/dashboard/submissions/${_id}`}
@@ -91,7 +100,7 @@ export default function MyCreatedContestsPage() {
                         See Submission
                       </Link>
                     ) : (
-                      <>
+                      <div className='flex gap-2'>
                         <Link
                           to={`/dashboard/edit-contest/${_id}`}
                           className='btn btn-primary'>
@@ -102,7 +111,7 @@ export default function MyCreatedContestsPage() {
                           className='btn btn-secondary'>
                           Delete
                         </button>
-                      </>
+                      </div>
                     )}
                   </td>
                 </tr>

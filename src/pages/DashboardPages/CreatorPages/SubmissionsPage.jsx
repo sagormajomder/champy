@@ -56,6 +56,7 @@ export default function SubmissionsPage() {
             <thead>
               <tr>
                 <th>SL.</th>
+                <th>Participator Image</th>
                 <th>Participator Name</th>
                 <th>Participator Email</th>
                 <th>Submitted Tasks</th>
@@ -67,6 +68,7 @@ export default function SubmissionsPage() {
               {submissions.map((submission, i) => {
                 const {
                   _id,
+                  participatorPhotoURL,
                   participatorEmail,
                   participatorName,
                   submittedTask,
@@ -81,6 +83,13 @@ export default function SubmissionsPage() {
                 return (
                   <tr key={_id}>
                     <th>{i + 1}</th>
+                    <th>
+                      <img
+                        className='w-10 h-10 object-cover rounded-full'
+                        src={participatorPhotoURL}
+                        alt={participatorName}
+                      />
+                    </th>
                     <td>{participatorName}</td>
                     <td>{participatorEmail}</td>
                     <td>{submittedTask}</td>
@@ -100,7 +109,9 @@ export default function SubmissionsPage() {
                       )}
 
                       {isDeadlinePassed && winner && <span>🎉Winner</span>}
-                      {isDeadlinePassed && loser && <span>Try Next Time</span>}
+                      {isDeadlinePassed && loser && (
+                        <span>🙂Try Next Time</span>
+                      )}
                     </td>
                   </tr>
                 );

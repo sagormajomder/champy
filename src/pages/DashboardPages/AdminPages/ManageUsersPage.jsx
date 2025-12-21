@@ -62,9 +62,9 @@ export default function ManageUsersPage() {
                 </td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
-                <td className='flex gap-2'>
+                <td>
                   {user.role === 'admin' && (
-                    <>
+                    <div className='flex gap-2'>
                       <button
                         onClick={() => handleChangeUser(user._id, 'user')}
                         className='btn btn-primary'>
@@ -75,11 +75,11 @@ export default function ManageUsersPage() {
                         className='btn btn-secondary'>
                         Make Creator
                       </button>
-                    </>
+                    </div>
                   )}
 
                   {user.role === 'user' && (
-                    <>
+                    <div className='flex gap-2'>
                       <button
                         onClick={() => handleChangeUser(user._id, 'admin')}
                         className='btn btn-primary'>
@@ -90,11 +90,11 @@ export default function ManageUsersPage() {
                         className='btn btn-secondary'>
                         Make Creator
                       </button>
-                    </>
+                    </div>
                   )}
 
                   {user.role === 'creator' && (
-                    <>
+                    <div className='flex gap-2'>
                       <button
                         onClick={() => handleChangeUser(user._id, 'admin')}
                         className='btn btn-primary'>
@@ -105,7 +105,7 @@ export default function ManageUsersPage() {
                         className='btn btn-secondary'>
                         Make User
                       </button>
-                    </>
+                    </div>
                   )}
                 </td>
               </tr>
