@@ -103,7 +103,7 @@ export default function MyProfilePage() {
       .then(async () => {
         // Update Into DB
         const res = await axiosSecure.patch(
-          `/users/${userInfo?._id}`,
+          `/users/${userInfo?._id}?email=${user?.email}`,
           updateUserInfo
         );
         // console.log(res);

@@ -105,6 +105,7 @@ export default function ContestStatusInfo({ contest, contestRefetch }) {
           contestDeadline,
           participatorName: user?.displayName,
           participatorEmail: user?.email,
+          participatorPhotoURL: user?.photoURL,
         };
 
         axiosSecure
