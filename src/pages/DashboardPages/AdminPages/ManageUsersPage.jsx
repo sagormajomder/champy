@@ -51,7 +51,7 @@ export default function ManageUsersPage() {
           <tbody>
             {users.map((user, i) => (
               <tr key={user._id}>
-                <th>{i + 1}</th>
+                <td>{i + 1}</td>
                 <td>{user.displayName}</td>
                 <td className=' rounded-full'>
                   <img

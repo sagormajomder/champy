@@ -77,14 +77,14 @@ export default function ManageContestPage() {
               } = contest;
               return (
                 <tr key={_id}>
-                  <th>{i + 1}</th>
-                  <th>
+                  <td>{i + 1}</td>
+                  <td>
                     <img
                       className='w-15 h-15 object-cover '
                       src={contestPhotoURL}
                       alt={contestName}
                     />
-                  </th>
+                  </td>
                   <td>{contestName}</td>
                   <td>{contestType.split('_').join(' ').toUpperCase()}</td>
                   {/* <td>{contestDesc}</td>

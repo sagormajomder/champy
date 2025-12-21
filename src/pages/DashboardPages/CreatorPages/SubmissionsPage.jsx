@@ -45,9 +45,9 @@ export default function SubmissionsPage() {
     <section className='space-y-6'>
       <h1>Contest Submissions</h1>
       {submissions.length === 0 ? (
-        <p className='text-red-400'>
-          The contestants have not yet submitted their entries.
-        </p>
+        <div className='flex justify-center items-center text-red-400'>
+          <h3>The contestants have not yet submitted their entries 🙂</h3>
+        </div>
       ) : (
         // Table
         <div className='overflow-x-auto rounded-box border border-base-content/5 bg-base-100'>
@@ -82,14 +82,14 @@ export default function SubmissionsPage() {
 
                 return (
                   <tr key={_id}>
-                    <th>{i + 1}</th>
-                    <th>
+                    <td>{i + 1}</td>
+                    <td>
                       <img
                         className='w-10 h-10 object-cover rounded-full'
                         src={participatorPhotoURL}
                         alt={participatorName}
                       />
-                    </th>
+                    </td>
                     <td>{participatorName}</td>
                     <td>{participatorEmail}</td>
                     <td>{submittedTask}</td>

@@ -23,62 +23,69 @@ export default function ParticipatedContestsPage() {
   return (
     <section className='space-y-6'>
       <h1>My Participated Contests</h1>
-      {/* Table */}
-      <div className='overflow-x-auto rounded-box border border-base-content/5 bg-base-100'>
-        <table className='table'>
-          {/* head */}
-          <thead>
-            <tr>
-              <th>SL.</th>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Prize</th>
-              <th>Fee</th>
-              <th>Payment Status</th>
-              <th>Transaction ID</th>
-              <th>Deadline</th>
-            </tr>
-          </thead>
-          <tbody>
-            {contests.map((contest, i) => {
-              const {
-                _id,
-                contestPhotoURL,
-                contestName,
-                contestType,
-                contestPrice,
-                contestPrize,
-                contestDeadline,
-              } = contest;
-              return (
-                <tr key={_id}>
-                  <th>{i + 1}</th>
-                  <th>
-                    <img
-                      className='w-15 h-15 object-cover '
-                      src={contestPhotoURL}
-                      alt={contestName}
-                    />
-                  </th>
-                  <td>{contestName}</td>
-                  <td>{contestType.split('_').join(' ').toUpperCase()}</td>
-                  <td>TK {contestPrize}</td>
-                  <td>TK {contestPrice}</td>
-                  <td>
-                    <span className={`badge badge-success`}>
-                      {paymentStatus.toUpperCase()}
-                    </span>
-                  </td>
-                  <td>{transactionIds[i]}</td>
 
-                  <td>{new Date(contestDeadline).toLocaleDateString()}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      {contests.length === 0 ? (
+        <div className='flex justify-center items-center text-red-400'>
+          <h3>You have not join any contests yet 🙂</h3>
+        </div>
+      ) : (
+        // Table
+        <div className='overflow-x-auto rounded-box border border-base-content/5 bg-base-100'>
+          <table className='table'>
+            {/* head */}
+            <thead>
+              <tr>
+                <th>SL.</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Prize</th>
+                <th>Fee</th>
+                <th>Payment Status</th>
+                <th>Transaction ID</th>
+                <th>Deadline</th>
+              </tr>
+            </thead>
+            <tbody>
+              {contests.map((contest, i) => {
+                const {
+                  _id,
+                  contestPhotoURL,
+                  contestName,
+                  contestType,
+                  contestPrice,
+                  contestPrize,
+                  contestDeadline,
+                } = contest;
+                return (
+                  <tr key={_id}>
+                    <td>{i + 1}</td>
+                    <td>
+                      <img
+                        className='w-15 h-15 object-cover '
+                        src={contestPhotoURL}
+                        alt={contestName}
+                      />
+                    </td>
+                    <td>{contestName}</td>
+                    <td>{contestType.split('_').join(' ').toUpperCase()}</td>
+                    <td>TK {contestPrize}</td>
+                    <td>TK {contestPrice}</td>
+                    <td>
+                      <span className={`badge badge-success`}>
+                        {paymentStatus.toUpperCase()}
+                      </span>
+                    </td>
+                    <td>{transactionIds[i]}</td>
+
+                    <td>{new Date(contestDeadline).toLocaleDateString()}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
     </section>
   );
 }
