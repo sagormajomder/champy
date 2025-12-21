@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAxiosSecure } from '../../hooks/useAxiosSecure';
-import { daysRemainingFunc } from '../../utils/utils';
 
 export default function ContestStatusInfo({ contest, contestRefetch }) {
   const [isCreated, setIsCreated] = useState(false);
@@ -66,7 +65,7 @@ export default function ContestStatusInfo({ contest, contestRefetch }) {
         return;
       }
 
-      const days = daysRemainingFunc(contestDeadline);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / 1000 / 60) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
@@ -105,6 +104,7 @@ export default function ContestStatusInfo({ contest, contestRefetch }) {
           contestId: _id,
           contestName,
           contestPrice,
+          contestDeadline,
           participatorName: user?.displayName,
           participatorEmail: user?.email,
         };

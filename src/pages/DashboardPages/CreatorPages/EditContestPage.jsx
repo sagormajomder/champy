@@ -42,6 +42,7 @@ export default function EditContestPage() {
   } = contest;
 
   async function handleEditContest(data) {
+    // console.log(data);
     setIsUpdated(true);
     const {
       contestName,

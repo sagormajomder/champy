@@ -1,5 +1,4 @@
 import { FiClock } from 'react-icons/fi';
-import { daysRemainingFunc } from './../../utils/utils';
 export default function ContestBanner({ contest }) {
   const {
     contestName,
@@ -9,7 +8,9 @@ export default function ContestBanner({ contest }) {
     contestDeadline,
   } = contest;
 
-  const daysRemaining = daysRemainingFunc(contestDeadline);
+  const daysRemaining = Math.floor(
+    (new Date(contestDeadline) - new Date()) / (1000 * 60 * 60 * 24)
+  );
 
   return (
     <section className='relative h-100 overflow-hidden rounded-2xl'>
@@ -29,13 +30,13 @@ export default function ContestBanner({ contest }) {
             {contestType.split('_').join(' ').toUpperCase()}
           </span>
           {/* Deadline Badge */}
-          {daysRemaining > 0 && (
+          {daysRemaining >= 0 && (
             <span className='badge bg-error/90 text-error-content badge-lg gap-2 font-semibold text-sm px-4 py-3 border-0'>
               <FiClock className='text-base' />
               Ends in {daysRemaining} days
             </span>
           )}
-          {daysRemaining == 0 && (
+          {daysRemaining < 0 && (
             <span className='badge bg-error/90 text-error-content badge-lg gap-2 font-semibold text-sm px-4 py-3 border-0'>
               Contest Ended
             </span>
