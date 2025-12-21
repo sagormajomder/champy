@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { GoHome } from 'react-icons/go';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 import { IoMdAddCircleOutline } from 'react-icons/io';
@@ -5,6 +6,14 @@ import { LuTrophy, LuUsers } from 'react-icons/lu';
 import { Link, Outlet } from 'react-router';
 
 export default function DashboardLayout() {
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  useEffect(() => {
+    const html = document.querySelector('html');
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
   return (
     <div className='drawer lg:drawer-open'>
       <input id='my-drawer-4' type='checkbox' className='drawer-toggle' />

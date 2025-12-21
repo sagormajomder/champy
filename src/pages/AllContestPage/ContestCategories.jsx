@@ -8,7 +8,7 @@ export default function ContestCategories({
   ];
 
   return (
-    <section className='flex justify-center items-center gap-2'>
+    <section className='flex flex-wrap justify-center items-center gap-2'>
       <div
         className={`badge cursor-pointer rounded-full ${
           selectedCategory === 'all'
