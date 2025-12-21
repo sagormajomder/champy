@@ -9,7 +9,7 @@ export default function ContestCard({ contest }) {
     contestName,
     contestType,
     contestDesc,
-    participatedCount = 10,
+    participatedCount = 0,
     contestDeadline,
   } = contest;
 

@@ -12,7 +12,11 @@ export default function ContestDetailsPage() {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
 
-  const { data: contest = {}, isPending } = useQuery({
+  const {
+    data: contest = {},
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: ['contest', id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/contests/${id}`);
@@ -30,7 +34,7 @@ export default function ContestDetailsPage() {
         {/* Contest Details */}
         <ContestDetails>
           <ContestDetailsLeft contest={contest} />
-          <ContestDetailsRight contest={contest} />
+          <ContestDetailsRight contest={contest} contestRefetch={refetch} />
         </ContestDetails>
       </Container>
     </section>

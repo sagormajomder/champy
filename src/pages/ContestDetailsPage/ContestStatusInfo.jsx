@@ -7,7 +7,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useAxiosSecure } from '../../hooks/useAxiosSecure';
 import { daysRemainingFunc } from '../../utils/utils';
 
-export default function ContestStatusInfo({ contest }) {
+export default function ContestStatusInfo({ contest, contestRefetch }) {
   const [isCreated, setIsCreated] = useState(false);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const taskModalRef = useRef(null);
@@ -37,23 +37,11 @@ export default function ContestStatusInfo({ contest }) {
   });
 
   // get participate info
-  const { data: payment = null } = useQuery({
-    queryKey: ['payments', _id, user?.email],
+  const { data: participates = null, refetch } = useQuery({
+    queryKey: ['participates', _id, user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/payments?contestId=${_id}&email=${user?.email}`
-      );
-      return res.data;
-    },
-  });
-
-  // get participate task submit info
-
-  const { data: submittedTask = null } = useQuery({
-    queryKey: ['submissions', _id, user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/submissions?contestId=${_id}&email=${user?.email}`
+        `/participates?contestId=${_id}&email=${user?.email}`
       );
       return res.data;
     },
@@ -117,6 +105,7 @@ export default function ContestStatusInfo({ contest }) {
           contestId: _id,
           contestName,
           contestPrice,
+          participatorName: user?.displayName,
           participatorEmail: user?.email,
         };
 
@@ -133,20 +122,22 @@ export default function ContestStatusInfo({ contest }) {
   async function handleTaskSubmit(data) {
     setIsCreated(true);
     const newTaskSubmission = {
-      contestId: _id,
-      participatorName: user?.displayName,
-      participatorEmail: user?.email,
       submittedTask: data.taskContent,
     };
 
-    const res = await axiosSecure.post('/submissions', newTaskSubmission);
-    console.log(res);
+    const res = await axiosSecure.patch(
+      `/participates/${_id}/${user?.email}`,
+      newTaskSubmission
+    );
+    // console.log(res);
 
-    if (res.data.insertedId) {
+    if (res.data.acknowledged) {
       reset();
       setIsCreated(false);
       toast.success('Successfully Task Submitted!');
       setIsTaskModalOpen(false);
+      refetch();
+      contestRefetch();
     }
   }
 
@@ -203,7 +194,7 @@ export default function ContestStatusInfo({ contest }) {
       </div>
 
       {/* Register Contest Button */}
-      {!payment && !submittedTask && (
+      {!participates && !participates?.submittedTask && (
         <button
           onClick={handleContestRegister}
           disabled={!isActive}
@@ -213,7 +204,7 @@ export default function ContestStatusInfo({ contest }) {
         </button>
       )}
 
-      {payment && !submittedTask && (
+      {participates && !participates?.submittedTask && (
         <button
           onClick={() => setIsTaskModalOpen(true)}
           disabled={!isActive}
@@ -223,7 +214,7 @@ export default function ContestStatusInfo({ contest }) {
         </button>
       )}
 
-      {payment && submittedTask && (
+      {participates && participates?.submittedTask && (
         <button
           disabled={true}
           className='btn btn-primary mb-1.5 w-full font-jakarta-sans'>
