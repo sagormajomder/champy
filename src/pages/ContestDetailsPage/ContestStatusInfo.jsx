@@ -36,12 +36,10 @@ export default function ContestStatusInfo({ contest, contestRefetch }) {
   });
 
   // get participate info
-  const { data: participates = null, refetch } = useQuery({
+  const { data: participate = null, refetch } = useQuery({
     queryKey: ['participates', _id, user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/participates?contestId=${_id}&email=${user?.email}`
-      );
+      const res = await axiosSecure.get(`/participates/${_id}/${user?.email}`);
       return res.data;
     },
   });
@@ -194,7 +192,7 @@ export default function ContestStatusInfo({ contest, contestRefetch }) {
       </div>
 
       {/* Register Contest Button */}
-      {!participates && !participates?.submittedTask && (
+      {!participate && !participate?.submittedTask && (
         <button
           onClick={handleContestRegister}
           disabled={!isActive}
@@ -204,7 +202,7 @@ export default function ContestStatusInfo({ contest, contestRefetch }) {
         </button>
       )}
 
-      {participates && !participates?.submittedTask && (
+      {participate && !participate?.submittedTask && (
         <button
           onClick={() => setIsTaskModalOpen(true)}
           disabled={!isActive}
@@ -214,7 +212,7 @@ export default function ContestStatusInfo({ contest, contestRefetch }) {
         </button>
       )}
 
-      {participates && participates?.submittedTask && (
+      {participate && participate?.submittedTask && (
         <button
           disabled={true}
           className='btn btn-primary mb-1.5 w-full font-jakarta-sans'>

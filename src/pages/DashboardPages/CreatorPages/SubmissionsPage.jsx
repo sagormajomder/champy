@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 import { useParams } from 'react-router';
 import Loader from '../../../components/Loader';
 import { useAxiosSecure } from '../../../hooks/useAxiosSecure';
@@ -9,7 +10,11 @@ export default function SubmissionsPage() {
   const { id: contestId } = useParams();
   const axiosSecure = useAxiosSecure();
 
-  const { data: submissions = [], isPending } = useQuery({
+  const {
+    data: submissions = [],
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: ['participates', contestId],
     queryFn: async () => {
       const res = await axiosSecure.get(`/participates/${contestId}`);
@@ -18,6 +23,21 @@ export default function SubmissionsPage() {
   });
 
   console.log(submissions);
+
+  async function handleDeclareWinner(participatorId) {
+    const updateParticipator = {
+      winner: true,
+    };
+    const res = await axiosSecure.patch(
+      `/participates/${participatorId}?contestId=${contestId}`,
+      updateParticipator
+    );
+
+    if (res.data.acknowledged) {
+      toast.success('🎉 Hurray! Winner is declared');
+      refetch();
+    }
+  }
 
   if (isPending) return <Loader />;
 
@@ -51,6 +71,8 @@ export default function SubmissionsPage() {
                   participatorName,
                   submittedTask,
                   contestDeadline,
+                  winner = false,
+                  loser = false,
                 } = submission;
 
                 const isDeadlinePassed =
@@ -64,17 +86,21 @@ export default function SubmissionsPage() {
                     <td>{submittedTask}</td>
                     <td>{new Date(contestDeadline).toLocaleDateString()}</td>
                     <td>
-                      {isDeadlinePassed ? (
-                        <button
-                          className='btn btn-primary btn-sm'
-                          onClick={() => console.log('declare winner', _id)}>
-                          Declare winner
-                        </button>
-                      ) : (
+                      {!isDeadlinePassed && (
                         <span className='text-sm text-gray-400 dark:text-warning'>
                           Not available yet
                         </span>
                       )}
+                      {isDeadlinePassed && !winner && !loser && (
+                        <button
+                          className='btn btn-primary btn-sm'
+                          onClick={() => handleDeclareWinner(_id)}>
+                          Declare winner
+                        </button>
+                      )}
+
+                      {isDeadlinePassed && winner && <span>🎉Winner</span>}
+                      {isDeadlinePassed && loser && <span>Try Next Time</span>}
                     </td>
                   </tr>
                 );
