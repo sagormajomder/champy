@@ -32,7 +32,7 @@ export default function ManageUsersPage() {
   if (isPending) return <Loader />;
 
   return (
-    <section>
+    <section className='space-y-6'>
       <h1>All Users</h1>
 
       <div className='overflow-x-auto rounded-box border border-base-content/5 bg-base-100'>

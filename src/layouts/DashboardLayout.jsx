@@ -45,7 +45,7 @@ export default function DashboardLayout() {
           <div className='px-4'>Champy Dashboard</div>
         </nav>
         {/* Page content here */}
-        <div className='p-4'>
+        <div className='p-10'>
           <Outlet />
         </div>
       </div>

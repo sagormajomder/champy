@@ -90,7 +90,7 @@ export default function AddContestPage() {
     <section className=''>
       <h1 className=' '>Create Contest</h1>
       <form
-        className='card-body px-0 pb-1'
+        className='card-body px-0 pb-1 md:max-w-[80%] max-w-full mx-auto'
         onSubmit={handleSubmit(handleAddContest)}>
         <fieldset className='fieldset'>
           {/* Contest Name */}

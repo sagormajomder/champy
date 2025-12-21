@@ -96,7 +96,7 @@ export default function EditContestPage() {
     <section className=''>
       <h1 className=' '>Edit Contest</h1>
       <form
-        className='card-body px-0 pb-1'
+        className='card-body px-0 pb-1 md:max-w-[80%] max-w-full mx-auto'
         onSubmit={handleSubmit(handleEditContest)}>
         <fieldset className='fieldset'>
           {/* Contest Name */}

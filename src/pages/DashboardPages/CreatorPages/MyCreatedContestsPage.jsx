@@ -34,8 +34,8 @@ export default function MyCreatedContestsPage() {
   }
 
   return (
-    <section>
-      <h1 className='mb-6'>My Created Contests</h1>
+    <section className='space-y-6'>
+      <h1>My Created Contests</h1>
       {/* Table */}
       <div className='overflow-x-auto rounded-box border border-base-content/5 bg-base-100'>
         <table className='table'>
@@ -85,7 +85,11 @@ export default function MyCreatedContestsPage() {
                   <td>{new Date(contestDeadline).toLocaleDateString()}</td>
                   <td className='flex gap-2 flex-col lg:flex-row justify-center lg:justify-start'>
                     {contestStatus === 'confirmed' ? (
-                      <Link className='btn btn-primary '>See Submission</Link>
+                      <Link
+                        to={`/dashboard/submissions/${_id}`}
+                        className='btn btn-primary '>
+                        See Submission
+                      </Link>
                     ) : (
                       <>
                         <Link
