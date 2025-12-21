@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { BsClipboardCheck } from 'react-icons/bs';
+import { CgProfile } from 'react-icons/cg';
 import { GoHome } from 'react-icons/go';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { LuTrophy, LuUsers } from 'react-icons/lu';
+import { PiMedal } from 'react-icons/pi';
 import { Link, Outlet } from 'react-router';
 
 export default function DashboardLayout() {
@@ -66,14 +69,47 @@ export default function DashboardLayout() {
                 <span className='is-drawer-close:hidden'>Homepage</span>
               </Link>
             </li>
+            {/* USER ROUTE */}
+            {/* Participated Contests */}
+            <li>
+              <Link
+                to='/dashboard/participated-contests'
+                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                data-tip='Participated Contests'>
+                <BsClipboardCheck className='text-lg' />
+                <span className='is-drawer-close:hidden'>
+                  Participated Contests
+                </span>
+              </Link>
+            </li>
+            {/* Winning Contests */}
+            <li>
+              <Link
+                to='/dashboard/winning-contests'
+                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                data-tip='Winning Contests'>
+                <PiMedal className='text-xl' />
+                <span className='is-drawer-close:hidden'>Winning Contests</span>
+              </Link>
+            </li>
+            {/* My Profile */}
+            <li>
+              <Link
+                to='/dashboard/profile'
+                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                data-tip='My Profile'>
+                <CgProfile className='text-xl' />
+                <span className='is-drawer-close:hidden'>My Profile</span>
+              </Link>
+            </li>
 
+            {/* CREATOR ROUTE */}
             {/* Add Contest */}
             <li>
               <Link
                 to='/dashboard/add-contest'
                 className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
                 data-tip='Add Contest'>
-                {/*Add contest icon */}
                 <IoMdAddCircleOutline className='text-xl' />
                 <span className='is-drawer-close:hidden'>Add Contest</span>
               </Link>
@@ -84,7 +120,6 @@ export default function DashboardLayout() {
                 to='/dashboard/created-contests'
                 className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
                 data-tip='My Created Contests'>
-                {/*Add contest icon */}
                 <HiOutlinePencilAlt className='text-xl' />
                 <span className='is-drawer-close:hidden'>
                   My Created Contests
@@ -92,13 +127,13 @@ export default function DashboardLayout() {
               </Link>
             </li>
 
+            {/* ADMIN ROUTE */}
             {/* Manage Users */}
             <li>
               <Link
                 to='/dashboard/manage-users'
                 className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
                 data-tip='Manage Users'>
-                {/*Add contest icon */}
                 <LuUsers className='text-xl' />
                 <span className='is-drawer-close:hidden'>Manage Users</span>
               </Link>
@@ -109,7 +144,6 @@ export default function DashboardLayout() {
                 to='/dashboard/manage-contests'
                 className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
                 data-tip='Manage Contests'>
-                {/*Add contest icon */}
                 <LuTrophy className='text-xl' />
                 <span className='is-drawer-close:hidden'>Manage Contests</span>
               </Link>

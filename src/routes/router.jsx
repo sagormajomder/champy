@@ -12,10 +12,13 @@ import AddContestPage from '../pages/DashboardPages/CreatorPages/AddContestPage'
 import EditContestPage from '../pages/DashboardPages/CreatorPages/EditContestPage';
 import MyCreatedContestsPage from '../pages/DashboardPages/CreatorPages/MyCreatedContestsPage';
 import SubmissionsPage from '../pages/DashboardPages/CreatorPages/SubmissionsPage';
+import MyProfilePage from '../pages/DashboardPages/UserPages/MyProfilePage';
+import ParticipatedContestsPage from '../pages/DashboardPages/UserPages/ParticipatedContestsPage';
 import ErrorPage from '../pages/ErrorPage';
 import HomePage from '../pages/HomePage/HomePage';
 import PaymentCancelled from '../pages/PaymentCancelled';
 import PaymentSuccess from '../pages/PaymentSuccess';
+import WinningContestsPage from './../pages/DashboardPages/UserPages/WinningContestsPage';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -85,7 +88,21 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      // Creator Role Pages
+      // User Route
+      {
+        path: 'participated-contests',
+        element: <ParticipatedContestsPage />,
+      },
+      {
+        path: 'winning-contests',
+        element: <WinningContestsPage />,
+      },
+      {
+        path: 'profile',
+        element: <MyProfilePage />,
+      },
+
+      // Creator Route
       {
         path: 'add-contest',
         Component: AddContestPage,
