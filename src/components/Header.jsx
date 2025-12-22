@@ -86,7 +86,7 @@ export default function Header() {
                 {links}
               </ul>
             </div>
-            <Link className=' text-xl font-bold flex gap-1 items-center'>
+            <Link className=' text-xl font-bold flex gap-0.5 items-center'>
               <FaTrophy className='text-primary text-2xl' />
               Champy
             </Link>
