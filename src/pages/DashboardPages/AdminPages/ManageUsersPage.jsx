@@ -70,7 +70,7 @@ export default function ManageUsersPage() {
               <tr key={user._id}>
                 <td>{currentPage * LIMIT + i + 1}</td>
                 <td>{user.displayName}</td>
-                <td className=' rounded-full'>
+                <td className=''>
                   <img
                     className='w-10 h-10 object-cover rounded-full'
                     src={user.photoURL}
