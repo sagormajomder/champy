@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router';
 import Loader from '../components/Loader';
 import DashboardLayout from '../layouts/DashboardLayout';
 import RootLayout from '../layouts/RootLayout';
+import AboutUsPage from '../pages/AboutUsPage/AboutUsPage';
 import AllContestPage from '../pages/AllContestPage/AllContestPage';
 import LoginPage from '../pages/AuthPages/LoginPage';
 import RegisterPage from '../pages/AuthPages/RegisterPage';
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: 'leaderboard',
         Component: LeaderboardPage,
+      },
+      {
+        path: 'about-us',
+        Component: AboutUsPage,
       },
 
       {
