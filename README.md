@@ -1,4 +1,4 @@
-# Champy
+# Champy - Challenge Yourself, Conquer the World
 
 Champy is a dynamic contest platform designed to foster competition and skill development. It offers a user-friendly interface for participants to join various contests, track their progress on global leaderboards, and engage with a community of like-minded individuals. Built with modern web technologies, Champy ensures a seamless and responsive experience for all users.
 
