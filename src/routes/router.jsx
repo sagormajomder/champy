@@ -22,6 +22,7 @@ import WinningContestsPage from './../pages/DashboardPages/UserPages/WinningCont
 import AdminRoute from './AdminRoute';
 import CreatorRoute from './CreatorRoute';
 import PrivateRoute from './PrivateRoute';
+import UserRoute from './UserRoute';
 
 const router = createBrowserRouter([
   {
@@ -93,15 +94,27 @@ const router = createBrowserRouter([
       // User Route
       {
         path: 'participated-contests',
-        element: <ParticipatedContestsPage />,
+        element: (
+          <UserRoute>
+            <ParticipatedContestsPage />
+          </UserRoute>
+        ),
       },
       {
         path: 'winning-contests',
-        element: <WinningContestsPage />,
+        element: (
+          <UserRoute>
+            <WinningContestsPage />
+          </UserRoute>
+        ),
       },
       {
         path: 'profile',
-        element: <MyProfilePage />,
+        element: (
+          <UserRoute>
+            <MyProfilePage />
+          </UserRoute>
+        ),
       },
 
       // Creator Route

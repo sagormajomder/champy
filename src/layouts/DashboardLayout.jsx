@@ -75,38 +75,44 @@ export default function DashboardLayout() {
               </Link>
             </li>
             {/* USER ROUTE */}
-            {/* Participated Contests */}
-            <li>
-              <Link
-                to='/dashboard/participated-contests'
-                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
-                data-tip='Participated Contests'>
-                <BsClipboardCheck className='text-lg' />
-                <span className='is-drawer-close:hidden'>
-                  Participated Contests
-                </span>
-              </Link>
-            </li>
-            {/* Winning Contests */}
-            <li>
-              <Link
-                to='/dashboard/winning-contests'
-                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
-                data-tip='Winning Contests'>
-                <PiMedal className='text-xl' />
-                <span className='is-drawer-close:hidden'>Winning Contests</span>
-              </Link>
-            </li>
-            {/* My Profile */}
-            <li>
-              <Link
-                to='/dashboard/profile'
-                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
-                data-tip='My Profile'>
-                <CgProfile className='text-xl' />
-                <span className='is-drawer-close:hidden'>My Profile</span>
-              </Link>
-            </li>
+            {role === 'user' && (
+              <>
+                {/* Participated Contests */}
+                <li>
+                  <Link
+                    to='/dashboard/participated-contests'
+                    className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                    data-tip='Participated Contests'>
+                    <BsClipboardCheck className='text-lg' />
+                    <span className='is-drawer-close:hidden'>
+                      Participated Contests
+                    </span>
+                  </Link>
+                </li>
+                {/* Winning Contests */}
+                <li>
+                  <Link
+                    to='/dashboard/winning-contests'
+                    className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                    data-tip='Winning Contests'>
+                    <PiMedal className='text-xl' />
+                    <span className='is-drawer-close:hidden'>
+                      Winning Contests
+                    </span>
+                  </Link>
+                </li>
+                {/* My Profile */}
+                <li>
+                  <Link
+                    to='/dashboard/profile'
+                    className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                    data-tip='My Profile'>
+                    <CgProfile className='text-xl' />
+                    <span className='is-drawer-close:hidden'>My Profile</span>
+                  </Link>
+                </li>
+              </>
+            )}
 
             {/* CREATOR ROUTE */}
             {role === 'creator' && (
