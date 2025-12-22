@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { FaTrophy } from 'react-icons/fa';
 import SectionTitle from '../../components/SectionTitle';
+import Container from './../../components/Container';
 
 const winners = [
   {
@@ -45,7 +46,7 @@ export default function WinnerAdvertiseSection() {
       <div className='absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2'></div>
       <div className='absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl translate-y-1/2'></div>
 
-      <div className='container mx-auto px-4 relative z-10'>
+      <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -121,7 +122,7 @@ export default function WinnerAdvertiseSection() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
