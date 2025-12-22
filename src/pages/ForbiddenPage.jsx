@@ -1,4 +1,4 @@
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-react';
 import { Link } from 'react-router';
 import forbiddenAnimation from '../assets/forbidden.json';
 import useRole from '../hooks/useRole';
@@ -16,14 +16,7 @@ export default function ForbiddenPage() {
 
   return (
     <div className='flex flex-col items-center justify-center h-screen'>
-      <Lottie
-        options={{
-          loop: false,
-          autoplay: true,
-          animationData: forbiddenAnimation,
-        }}
-        height={200}
-        width={200}></Lottie>
+      <Lottie loop={false} autoplay={true} animationData={forbiddenAnimation} />
       <h1 className='text-3xl font-bold text-red-500'>
         You Are Forbidden to Access This Page
       </h1>
@@ -35,7 +28,7 @@ export default function ForbiddenPage() {
           {' '}
           Go to Home
         </Link>
-        <Link className='btn btn-secondary' to={dashboardLink}>
+        <Link className='btn btn-outline btn-primary' to={dashboardLink}>
           {' '}
           Go to Dashboard
         </Link>

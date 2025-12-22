@@ -52,6 +52,7 @@ export default function ManageContestPage() {
               <th>Image</th>
               <th>Name</th>
               <th>Type</th>
+              <th>Hosted By</th>
               {/* <th>Description</th>
               <th>Task</th> */}
               <th>Entry Fee</th>
@@ -74,6 +75,8 @@ export default function ManageContestPage() {
                 contestPrize,
                 contestDeadline,
                 contestStatus,
+                creatorName,
+                creatorEmail,
               } = contest;
               return (
                 <tr key={_id}>
@@ -89,6 +92,12 @@ export default function ManageContestPage() {
                   <td>{contestType.split('_').join(' ').toUpperCase()}</td>
                   {/* <td>{contestDesc}</td>
                   <td>{taskIns}</td> */}
+                  <td>
+                    <div className='flex flex-col gap-1'>
+                      <span>{creatorName}</span>
+                      <span>({creatorEmail})</span>
+                    </div>
+                  </td>
                   <td>{contestPrice}</td>
                   <td>{contestPrize}</td>
                   <td>{new Date(contestDeadline).toLocaleDateString()}</td>

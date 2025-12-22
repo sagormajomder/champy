@@ -9,6 +9,8 @@ export default function MyCreatedContestsPage() {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
+  console.log(user.email);
+
   const {
     isPending,
     data: contests = [],
