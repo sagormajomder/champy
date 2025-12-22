@@ -12,14 +12,10 @@ export default function LeaderboardPage() {
     },
   });
 
-  console.log(winnerParticipators);
+  // console.log(winnerParticipators);
 
-  // Sort by winCount descending
-  // const sortedUsers = [...winnerParticipators].sort((a, b) => b.winCount - a.winCount);
-  const sortedUsers = [...winnerParticipators];
-
-  const topThree = sortedUsers.slice(0, 3);
-  const others = sortedUsers.slice(3);
+  const topThree = winnerParticipators.slice(0, 3);
+  const others = winnerParticipators.slice(3);
 
   // Helper to safely get user at index
   const first = topThree[0];
@@ -147,17 +143,18 @@ export default function LeaderboardPage() {
             ))}
 
             {/* Is other exits or not */}
-            {others.length === 0 && sortedUsers.length > 3 && (
+            {others.length === 0 && winnerParticipators.length > 3 && (
               <div className='text-center text-gray-500 py-8'>
                 End of leaderboard
               </div>
             )}
-            {sortedUsers.length <= 3 && sortedUsers.length > 0 && (
-              <div className='text-center text-gray-500 py-8'>
-                No other participants to show
-              </div>
-            )}
-            {sortedUsers.length === 0 && (
+            {winnerParticipators.length <= 3 &&
+              winnerParticipators.length > 0 && (
+                <div className='text-center text-gray-500 py-8'>
+                  No other participants to show
+                </div>
+              )}
+            {winnerParticipators.length === 0 && (
               <div className='text-center text-gray-500 py-8'>
                 No participants found
               </div>
