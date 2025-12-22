@@ -29,6 +29,9 @@ export default function Header() {
       <li className='navLink'>
         <NavLink to='/contests'>Contests</NavLink>
       </li>
+      <li className='navLink'>
+        <NavLink to='/leaderboard'>Leaderboard</NavLink>
+      </li>
     </>
   );
 

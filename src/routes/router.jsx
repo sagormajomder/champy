@@ -16,6 +16,7 @@ import MyProfilePage from '../pages/DashboardPages/UserPages/MyProfilePage';
 import ParticipatedContestsPage from '../pages/DashboardPages/UserPages/ParticipatedContestsPage';
 import ErrorPage from '../pages/ErrorPage';
 import HomePage from '../pages/HomePage/HomePage';
+import LeaderboardPage from '../pages/LeaderboardPage';
 import PaymentCancelled from '../pages/PaymentCancelled';
 import PaymentSuccess from '../pages/PaymentSuccess';
 import WinningContestsPage from './../pages/DashboardPages/UserPages/WinningContestsPage';
@@ -35,12 +36,17 @@ const router = createBrowserRouter([
         Component: HomePage,
       },
       {
-        path: '/contests',
+        path: 'contests',
         Component: AllContestPage,
       },
 
       {
-        path: '/contest-details/:id',
+        path: 'leaderboard',
+        Component: LeaderboardPage,
+      },
+
+      {
+        path: 'contest-details/:id',
         element: (
           <PrivateRoute>
             <ContestDetailsPage />
@@ -50,7 +56,7 @@ const router = createBrowserRouter([
 
       // Payment Pages
       {
-        path: '/payment-success',
+        path: 'payment-success',
         element: (
           <PrivateRoute>
             <PaymentSuccess />
@@ -58,7 +64,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/payment-cancelled',
+        path: 'payment-cancelled',
         element: (
           <PrivateRoute>
             <PaymentCancelled />
@@ -68,11 +74,11 @@ const router = createBrowserRouter([
 
       // Auth Pages
       {
-        path: '/auth/login',
+        path: 'auth/login',
         Component: LoginPage,
       },
       {
-        path: '/auth/register',
+        path: 'auth/register',
         Component: RegisterPage,
       },
       // Error Page
