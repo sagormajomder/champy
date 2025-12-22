@@ -19,6 +19,7 @@ import HomePage from '../pages/HomePage/HomePage';
 import PaymentCancelled from '../pages/PaymentCancelled';
 import PaymentSuccess from '../pages/PaymentSuccess';
 import WinningContestsPage from './../pages/DashboardPages/UserPages/WinningContestsPage';
+import AdminRoute from './AdminRoute';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -122,11 +123,19 @@ const router = createBrowserRouter([
       // Admin Route
       {
         path: 'manage-users',
-        Component: ManageUsersPage,
+        element: (
+          <AdminRoute>
+            <ManageUsersPage />
+          </AdminRoute>
+        ),
       },
       {
         path: 'manage-contests',
-        Component: ManageContestPage,
+        element: (
+          <AdminRoute>
+            <ManageContestPage />
+          </AdminRoute>
+        ),
       },
       // Error Page
       {

@@ -7,9 +7,12 @@ import { IoMdAddCircleOutline } from 'react-icons/io';
 import { LuTrophy, LuUsers } from 'react-icons/lu';
 import { PiMedal } from 'react-icons/pi';
 import { Link, Outlet } from 'react-router';
+import useRole from '../hooks/useRole';
 
 export default function DashboardLayout() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  const { role } = useRole();
 
   useEffect(() => {
     const html = document.querySelector('html');
@@ -128,26 +131,32 @@ export default function DashboardLayout() {
             </li>
 
             {/* ADMIN ROUTE */}
-            {/* Manage Users */}
-            <li>
-              <Link
-                to='/dashboard/manage-users'
-                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
-                data-tip='Manage Users'>
-                <LuUsers className='text-xl' />
-                <span className='is-drawer-close:hidden'>Manage Users</span>
-              </Link>
-            </li>
-            {/* Manage Contest */}
-            <li>
-              <Link
-                to='/dashboard/manage-contests'
-                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
-                data-tip='Manage Contests'>
-                <LuTrophy className='text-xl' />
-                <span className='is-drawer-close:hidden'>Manage Contests</span>
-              </Link>
-            </li>
+            {role === 'admin' && (
+              <>
+                {/* Manage Users */}
+                <li>
+                  <Link
+                    to='/dashboard/manage-users'
+                    className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                    data-tip='Manage Users'>
+                    <LuUsers className='text-xl' />
+                    <span className='is-drawer-close:hidden'>Manage Users</span>
+                  </Link>
+                </li>
+                {/* Manage Contest */}
+                <li>
+                  <Link
+                    to='/dashboard/manage-contests'
+                    className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                    data-tip='Manage Contests'>
+                    <LuTrophy className='text-xl' />
+                    <span className='is-drawer-close:hidden'>
+                      Manage Contests
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
 
             {/* List item */}
           </ul>
