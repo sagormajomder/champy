@@ -1,21 +1,34 @@
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Loader from '../../../components/Loader';
 import { useAxiosSecure } from '../../../hooks/useAxiosSecure';
 
+const LIMIT = 10;
+
 export default function ManageUsersPage() {
+  const [totalPage, setTotalPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const axiosSecure = useAxiosSecure();
   const {
     isPending,
-    data: users = [],
+    data = {},
     refetch,
   } = useQuery({
-    queryKey: ['users'],
+    queryKey: ['users', currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get('/users');
+      const res = await axiosSecure.get(
+        `/users?limit=${LIMIT}&skip=${currentPage * LIMIT}`
+      );
+      setTotalPage(Math.ceil(res.data.totalUsersCount / LIMIT));
       return res.data;
     },
   });
+
+  // console.log(totalPage);
+  // console.log(data);
+
+  const { users = [] } = data;
 
   // console.log(users);
 
@@ -27,6 +40,10 @@ export default function ManageUsersPage() {
       toast.success(`User role change to ${role} successfully!`);
       refetch();
     }
+  }
+
+  function handlePageNavigate(pageNum) {
+    setCurrentPage(pageNum);
   }
 
   if (isPending) return <Loader />;
@@ -49,9 +66,9 @@ export default function ManageUsersPage() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, i) => (
+            {users?.map((user, i) => (
               <tr key={user._id}>
-                <td>{i + 1}</td>
+                <td>{currentPage * LIMIT + i + 1}</td>
                 <td>{user.displayName}</td>
                 <td className=' rounded-full'>
                   <img
@@ -112,6 +129,40 @@ export default function ManageUsersPage() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* pages */}
+
+      <div className='flex justify-center items-center gap-2'>
+        {currentPage > 0 && (
+          <button
+            onClick={() =>
+              currentPage !== 0 && setCurrentPage(prev => prev - 1)
+            }
+            className={`btn`}>
+            Prev
+          </button>
+        )}
+
+        {[...Array(totalPage).keys()].map(v => (
+          <button
+            onClick={() => handlePageNavigate(v)}
+            className={`btn btn-primary ${
+              currentPage !== v ? 'btn-outline' : ''
+            }   `}
+            key={v}>
+            {v + 1}
+          </button>
+        ))}
+        {currentPage < totalPage - 1 && (
+          <button
+            onClick={() =>
+              currentPage < totalPage - 1 && setCurrentPage(prev => prev + 1)
+            }
+            className={`btn`}>
+            Next
+          </button>
+        )}
       </div>
     </section>
   );
