@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router';
 import Loader from '../../../components/Loader';
 import { useAxiosSecure } from '../../../hooks/useAxiosSecure';
+import { contestCategories } from '../../../utils/utils';
 
 export default function EditContestPage() {
   const [isUpdated, setIsUpdated] = useState(false);
@@ -215,10 +216,13 @@ export default function EditContestPage() {
             <option value='' disabled={true}>
               Select Contest Type
             </option>
-            <option value='design_contest'>Design Contest</option>
-            <option value='article_writing'>Article Writing</option>
-            <option value='business_idea'>Business Idea</option>
-            <option value='game_review'>Game Review</option>
+            {contestCategories.map((category, i) => (
+              <option
+                key={i}
+                value={category.split(' ').join('_').toLowerCase()}>
+                {category}
+              </option>
+            ))}
           </select>
           {errors.contestType?.type === 'required' && (
             <span className='text-red-400'>Contest Type is required!</span>

@@ -204,13 +204,13 @@ export default function AddContestPage() {
             <option value='' disabled={true}>
               Select Contest Type
             </option>
-            {contestCategories.map((category, i) => {
+            {contestCategories.map((category, i) => (
               <option
                 key={i}
                 value={category.split(' ').join('_').toLowerCase()}>
                 {category}
-              </option>;
-            })}
+              </option>
+            ))}
           </select>
           {errors.contestType?.type === 'required' && (
             <span className='text-red-400'>Contest Type is required!</span>
