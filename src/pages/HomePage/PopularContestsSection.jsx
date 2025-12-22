@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { motion } from 'motion/react';
 import { Link } from 'react-router';
 import Container from '../../components/Container';
 import SectionTitle from '../../components/SectionTitle';
@@ -22,11 +23,22 @@ export default function PopularContestsSection() {
   return (
     <section className='py-14'>
       <Container className='space-y-10'>
-        <SectionTitle
-          title='Popular Contests'
-          desc='Join the most active competitions happening right now.'
-        />
-        <div className='space-y-5'>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}>
+          <SectionTitle
+            title='Popular Contests'
+            desc='Join the most active competitions happening right now.'
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true }}
+          className='space-y-5'>
           {/* Contest Cards */}
           <AllContest sortedContests={sortedContests.slice(0, 8)} />
           <div className='text-center'>
@@ -34,7 +46,7 @@ export default function PopularContestsSection() {
               View More
             </Link>
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );
