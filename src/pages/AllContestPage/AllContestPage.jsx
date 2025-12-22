@@ -28,7 +28,7 @@ export default function AllContestPage() {
   });
 
   const sortedContests = contestByCategory.toSorted(
-    (a, b) => b.participateCount - a.participateCount
+    (a, b) => b.participatedCount - a.participatedCount
   );
 
   // console.log(contests);
