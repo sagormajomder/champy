@@ -1,3 +1,4 @@
+import AdvertiseSection from './AdvertiseSection';
 import HeroBanner from './HeroBanner';
 import PopularContestsSection from './PopularContestsSection';
 import WinnerAdvertiseSection from './WinnerAdvertiseSection';
@@ -8,6 +9,7 @@ export default function HomePage() {
       <HeroBanner />
       <PopularContestsSection />
       <WinnerAdvertiseSection />
+      <AdvertiseSection />
     </div>
   );
 }
