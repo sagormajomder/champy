@@ -1,11 +1,15 @@
+import { FaTrophy } from 'react-icons/fa';
 import { Link } from 'react-router';
 
 export default function Footer() {
   return (
     <footer className='footer footer-horizontal footer-center text-white p-10 bg-neutral'>
       <aside>
-        <p className='font-bold'>
-          <span className='text-2xl'>Champy</span>
+        <p className='font-bold '>
+          <span className='text-2xl flex gap-1 items-center'>
+            <FaTrophy className='text-primary-content text-2xl' />
+            Champy
+          </span>
           <br />
           {/* Providing reliable tech since 1992 */}
         </p>
