@@ -35,6 +35,9 @@ export default function Header() {
       <li className='navLink'>
         <NavLink to='/about-us'>About Us</NavLink>
       </li>
+      <li className='navLink'>
+        <NavLink to='/contact-us'>Contact Us</NavLink>
+      </li>
     </>
   );
 

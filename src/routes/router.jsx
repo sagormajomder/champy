@@ -6,6 +6,7 @@ import AboutUsPage from '../pages/AboutUsPage/AboutUsPage';
 import AllContestPage from '../pages/AllContestPage/AllContestPage';
 import LoginPage from '../pages/AuthPages/LoginPage';
 import RegisterPage from '../pages/AuthPages/RegisterPage';
+import ContactUsPage from '../pages/ContactUsPage/ContactUsPage';
 import ContestDetailsPage from '../pages/ContestDetailsPage/ContestDetailsPage';
 import ManageContestPage from '../pages/DashboardPages/AdminPages/ManageContestPage';
 import ManageUsersPage from '../pages/DashboardPages/AdminPages/ManageUsersPage';
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: 'about-us',
         Component: AboutUsPage,
+      },
+      {
+        path: 'contact-us',
+        Component: ContactUsPage,
       },
 
       {
