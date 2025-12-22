@@ -41,20 +41,31 @@ export default function SearchResultPage() {
           />
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-          className='space-y-5'>
-          {/* Contest Cards */}
-          <AllContest sortedContests={searchContests} />
-          <div className='text-center'>
-            <Link className='btn btn-primary' to='/contests'>
-              View More
-            </Link>
-          </div>
-        </motion.div>
+        {searchContests.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className='flex justify-center items-center text-red-400'>
+            <h3>We couldn’t find any contests based on your search</h3>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+            className='space-y-5'>
+            {/* Contest Cards */}
+            <AllContest sortedContests={searchContests} />
+            <div className='text-center'>
+              <Link className='btn btn-primary' to='/contests'>
+                View More
+              </Link>
+            </div>
+          </motion.div>
+        )}
       </Container>
     </section>
   );
