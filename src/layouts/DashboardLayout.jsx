@@ -13,6 +13,14 @@ export default function DashboardLayout() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   const { role } = useRole();
+  let dashboardLink = '/';
+  const userDashboard = '/dashboard/participated-contests';
+  const creatorDashboard = '/dashboard/add-contest';
+  const adminDashboard = '/dashboard/manage-users';
+
+  if (role === 'user') dashboardLink = userDashboard;
+  if (role === 'creator') dashboardLink = creatorDashboard;
+  if (role === 'admin') dashboardLink = adminDashboard;
 
   useEffect(() => {
     const html = document.querySelector('html');
@@ -46,7 +54,9 @@ export default function DashboardLayout() {
             </svg>
           </label>
           <div className='px-4'>
-            {role[0].toUpperCase() + role.slice(1)} Dashboard
+            <Link to={dashboardLink}>
+              {role[0].toUpperCase() + role.slice(1)} Dashboard
+            </Link>
           </div>
         </nav>
         {/* Page content here */}

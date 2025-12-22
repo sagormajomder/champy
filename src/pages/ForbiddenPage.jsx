@@ -1,7 +1,19 @@
 import Lottie from 'react-lottie';
 import { Link } from 'react-router';
 import forbiddenAnimation from '../assets/forbidden.json';
+import useRole from '../hooks/useRole';
 export default function ForbiddenPage() {
+  const { role } = useRole();
+
+  let dashboardLink = '/';
+  const userDashboard = '/dashboard/participated-contests';
+  const creatorDashboard = '/dashboard/add-contest';
+  const adminDashboard = '/dashboard/manage-users';
+
+  if (role === 'user') dashboardLink = userDashboard;
+  if (role === 'creator') dashboardLink = creatorDashboard;
+  if (role === 'admin') dashboardLink = adminDashboard;
+
   return (
     <div className='flex flex-col items-center justify-center h-screen'>
       <Lottie
@@ -23,7 +35,7 @@ export default function ForbiddenPage() {
           {' '}
           Go to Home
         </Link>
-        <Link className='btn btn-secondary' to='/dashboard'>
+        <Link className='btn btn-secondary' to={dashboardLink}>
           {' '}
           Go to Dashboard
         </Link>

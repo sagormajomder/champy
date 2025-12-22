@@ -2,11 +2,23 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, NavLink } from 'react-router';
 import { useAuth } from '../contexts/AuthContext';
+import useRole from '../hooks/useRole';
 import Container from './Container';
 
 export default function Header() {
   const { user, setUser, signOutUser } = useAuth();
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  const { role } = useRole();
+
+  let dashboardLink = '/';
+  const userDashboard = '/dashboard/participated-contests';
+  const creatorDashboard = '/dashboard/add-contest';
+  const adminDashboard = '/dashboard/manage-users';
+
+  if (role === 'user') dashboardLink = userDashboard;
+  if (role === 'creator') dashboardLink = creatorDashboard;
+  if (role === 'admin') dashboardLink = adminDashboard;
 
   const links = (
     <>
@@ -107,7 +119,7 @@ export default function Header() {
                       </span>
                     </li>
                     <li className='mb-2'>
-                      <Link to='/dashboard'>Dashboard</Link>
+                      <Link to={dashboardLink}>Dashboard</Link>
                     </li>
                     <li>
                       <button
