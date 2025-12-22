@@ -20,6 +20,7 @@ import PaymentCancelled from '../pages/PaymentCancelled';
 import PaymentSuccess from '../pages/PaymentSuccess';
 import WinningContestsPage from './../pages/DashboardPages/UserPages/WinningContestsPage';
 import AdminRoute from './AdminRoute';
+import CreatorRoute from './CreatorRoute';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -106,19 +107,35 @@ const router = createBrowserRouter([
       // Creator Route
       {
         path: 'add-contest',
-        Component: AddContestPage,
+        element: (
+          <CreatorRoute>
+            <AddContestPage />
+          </CreatorRoute>
+        ),
       },
       {
         path: 'created-contests',
-        Component: MyCreatedContestsPage,
+        element: (
+          <CreatorRoute>
+            <MyCreatedContestsPage />
+          </CreatorRoute>
+        ),
       },
       {
         path: 'edit-contest/:id',
-        Component: EditContestPage,
+        element: (
+          <CreatorRoute>
+            <EditContestPage />
+          </CreatorRoute>
+        ),
       },
       {
         path: 'submissions/:id',
-        Component: SubmissionsPage,
+        element: (
+          <CreatorRoute>
+            <SubmissionsPage />
+          </CreatorRoute>
+        ),
       },
       // Admin Route
       {

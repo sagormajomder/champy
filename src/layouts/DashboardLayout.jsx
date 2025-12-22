@@ -45,7 +45,9 @@ export default function DashboardLayout() {
               <path d='M14 10l2 2l-2 2'></path>
             </svg>
           </label>
-          <div className='px-4'>Champy Dashboard</div>
+          <div className='px-4'>
+            {role[0].toUpperCase() + role.slice(1)} Dashboard
+          </div>
         </nav>
         {/* Page content here */}
         <div className='p-10'>
@@ -107,28 +109,32 @@ export default function DashboardLayout() {
             </li>
 
             {/* CREATOR ROUTE */}
-            {/* Add Contest */}
-            <li>
-              <Link
-                to='/dashboard/add-contest'
-                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
-                data-tip='Add Contest'>
-                <IoMdAddCircleOutline className='text-xl' />
-                <span className='is-drawer-close:hidden'>Add Contest</span>
-              </Link>
-            </li>
-            {/* Creator Created Contests */}
-            <li>
-              <Link
-                to='/dashboard/created-contests'
-                className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
-                data-tip='My Created Contests'>
-                <HiOutlinePencilAlt className='text-xl' />
-                <span className='is-drawer-close:hidden'>
-                  My Created Contests
-                </span>
-              </Link>
-            </li>
+            {role === 'creator' && (
+              <>
+                {/* Add Contest */}
+                <li>
+                  <Link
+                    to='/dashboard/add-contest'
+                    className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                    data-tip='Add Contest'>
+                    <IoMdAddCircleOutline className='text-xl' />
+                    <span className='is-drawer-close:hidden'>Add Contest</span>
+                  </Link>
+                </li>
+                {/* Creator Created Contests */}
+                <li>
+                  <Link
+                    to='/dashboard/created-contests'
+                    className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                    data-tip='My Created Contests'>
+                    <HiOutlinePencilAlt className='text-xl' />
+                    <span className='is-drawer-close:hidden'>
+                      My Created Contests
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
 
             {/* ADMIN ROUTE */}
             {role === 'admin' && (
