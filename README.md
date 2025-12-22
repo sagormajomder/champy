@@ -9,6 +9,7 @@ Champy is a dynamic contest platform designed to foster competition and skill de
 - [Run it Locally](#run-it-locally)
 - [Live URL](#live-url)
 - [Project Dependencies](#project-dependencies)
+- [Extra Section](#extra-section)
 - [Connect With Me](#connect-with-me)
 
 ## Features
@@ -118,6 +119,10 @@ Please follow the below instructions to run this project in your machine:
     "vite": "^7.2.4"
   }
 ```
+
+## Extra Section
+
+Added Three extra routes and they are `About Us`, `Contact Us` routes and `Search Contests Result` route for showing the user contest search result.
 
 ## Connect with Me
 

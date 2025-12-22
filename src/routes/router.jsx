@@ -21,6 +21,7 @@ import HomePage from '../pages/HomePage/HomePage';
 import LeaderboardPage from '../pages/LeaderboardPage';
 import PaymentCancelled from '../pages/PaymentCancelled';
 import PaymentSuccess from '../pages/PaymentSuccess';
+import SearchResultPage from '../pages/SearchResultPage';
 import WinningContestsPage from './../pages/DashboardPages/UserPages/WinningContestsPage';
 import AdminRoute from './AdminRoute';
 import CreatorRoute from './CreatorRoute';
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: 'contact-us',
         Component: ContactUsPage,
+      },
+      {
+        path: 'search-contests',
+        Component: SearchResultPage,
       },
 
       {

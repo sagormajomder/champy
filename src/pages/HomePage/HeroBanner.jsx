@@ -11,7 +11,7 @@ export default function HeroBanner() {
   const handleSearch = () => {
     if (searchQuery.trim()) {
       navigate(
-        `/all-contests?search=${searchQuery
+        `/search-contests?search=${searchQuery
           .trim()
           .split(' ')
           .join('_')
@@ -21,7 +21,7 @@ export default function HeroBanner() {
   };
 
   const handleCategoryClick = category => {
-    navigate(`/all-contests?search=${category}`);
+    navigate(`/search-contests?search=${category}`);
   };
 
   const handleKeyDown = e => {
