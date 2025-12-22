@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -111,133 +112,145 @@ export default function RegisterPage() {
   return (
     <section className='py-14'>
       <Container>
-        <h1 className=' '>Create an Account</h1>
-        <p className='ml-2 text-dark'>Register with Champy</p>
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{
+            duration: 0.3,
+          }}
+          className='mx-auto max-w-2xl'>
+          <h1 className=' '>Create an Account</h1>
+          <p className='ml-2 text-dark'>Register with Champy</p>
 
-        {/* Form  */}
-        <form
-          className='card-body px-0 pb-1'
-          onSubmit={handleSubmit(handleRegister)}>
-          <fieldset className='fieldset'>
-            {/* Photo Upload */}
-            <div>
-              <label htmlFor='image' className='label'>
-                {/* <img
+          {/* Form  */}
+          <form
+            className='card-body px-0 pb-1'
+            onSubmit={handleSubmit(handleRegister)}>
+            <fieldset className='fieldset'>
+              {/* Name */}
+              <label htmlFor='name' className='label'>
+                Name
+              </label>
+              <input
+                type='text'
+                {...register('displayName', { required: true })}
+                className='input w-full'
+                placeholder='Name'
+                id='name'
+              />
+              {errors.displayName?.type === 'required' && (
+                <span className='text-red-400'>Name is required!</span>
+              )}
+              {/* Photo Upload */}
+              <div>
+                <label htmlFor='image' className='label'>
+                  {/* <img
                   className='object-cover w-15 h-15 rounded-full'
                   src={photoPreview}
                   alt=''
                 /> */}
+                  Upload Photo
+                </label>
+                <input
+                  className='file-input w-full'
+                  type='file'
+                  {...register('photo', { required: true })}
+                  id='image'
+                />
+              </div>
+              {errors.photo?.type === 'required' && (
+                <span className='text-red-400'>Photo is required!</span>
+              )}
+              {/* Email */}
+              <label htmlFor='email' className='label'>
+                Email
               </label>
               <input
-                className='file-input'
-                type='file'
-                {...register('photo', { required: true })}
-                id='image'
+                type='email'
+                {...register('email', { required: true })}
+                className='input w-full'
+                placeholder='Email'
+                id='email'
               />
-            </div>
-            {errors.photo?.type === 'required' && (
-              <span className='text-red-400'>Photo is required!</span>
-            )}
-
-            {/* Name */}
-            <label htmlFor='name' className='label'>
-              Name
-            </label>
-            <input
-              type='text'
-              {...register('displayName', { required: true })}
-              className='input w-full'
-              placeholder='Name'
-              id='name'
-            />
-            {errors.displayName?.type === 'required' && (
-              <span className='text-red-400'>Name is required!</span>
-            )}
-            {/* Email */}
-            <label htmlFor='email' className='label'>
-              Email
-            </label>
-            <input
-              type='email'
-              {...register('email', { required: true })}
-              className='input w-full'
-              placeholder='Email'
-              id='email'
-            />
-            {errors.email?.type === 'required' && (
-              <span className='text-red-400'>Email is required!</span>
-            )}
-            {/* Password */}
-            <label htmlFor='pass' className='label'>
-              Password
-            </label>
-            <div className='relative'>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                {...register('password', {
-                  required: true,
-                  minLength: 6,
-                  pattern:
-                    /^(?=.*[a-z])(?=.*[A-Z]).(?=.*\d).(?=.*[^A-Za-z0-9]).+$/,
-                })}
-                className='input w-full '
-                placeholder='Password'
-                id='pass'
-              />
-
-              {watchedPassword.length > 0 && (
-                <button
-                  type='button'
-                  onClick={() => setShowPassword(!showPassword)}
-                  className='absolute top-1/2 right-3 z-10 -translate-y-1/2 cursor-pointer text-xl'>
-                  {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-                </button>
+              {errors.email?.type === 'required' && (
+                <span className='text-red-400'>Email is required!</span>
               )}
-            </div>
-            {!errors.password && (
-              <p className='mt-1 text-gray-500 text-xs'>
-                Password length must be at least 6 chararacter, must contain at
-                least one uppercase, one lowercase letter, one digit and one
-                special characters!
-              </p>
-            )}
+              {/* Password */}
+              <label htmlFor='pass' className='label'>
+                Password
+              </label>
+              <div className='relative'>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password', {
+                    required: true,
+                    minLength: 6,
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z]).(?=.*\d).(?=.*[^A-Za-z0-9]).+$/,
+                  })}
+                  className='input w-full '
+                  placeholder='Password'
+                  id='pass'
+                />
 
-            {errors.password?.type === 'required' && (
-              <span className='text-red-400'>Password is required!</span>
-            )}
-            {errors.password?.type === 'minLength' && (
-              <span className='text-red-400'>
-                Password must be at least 6 characters!
-              </span>
-            )}
-            {errors.password?.type === 'pattern' && (
-              <span className='text-red-400'>
-                Password must contain at least one uppercase, one lowercase
-                letter, one digit and one special characters!
-              </span>
-            )}
+                {watchedPassword.length > 0 && (
+                  <button
+                    type='button'
+                    onClick={() => setShowPassword(!showPassword)}
+                    className='absolute top-1/2 right-3 z-10 -translate-y-1/2 cursor-pointer text-xl'>
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
+                )}
+              </div>
+              {!errors.password && (
+                <p className='mt-1 text-gray-500 text-xs'>
+                  Password length must be at least 6 chararacter, must contain
+                  at least one uppercase, one lowercase letter, one digit and
+                  one special characters!
+                </p>
+              )}
 
-            {/* Form Submit */}
-            <button
-              type='submit'
-              disabled={isLoading}
-              className='btn btn-primary border-none text-dark mt-4'>
-              Register
-            </button>
-          </fieldset>
-        </form>
-        <p>
-          Already have an account?{' '}
-          <Link
-            to='/auth/login'
-            state={location.state}
-            className='hover:underline hover:text-secondary underline sm:no-underline'>
-            Login
-          </Link>
-        </p>
-        <div className='text-center my-4'>Or</div>
-        {/* Google Login */}
-        <GoogleLogin title='Register with Google' />
+              {errors.password?.type === 'required' && (
+                <span className='text-red-400'>Password is required!</span>
+              )}
+              {errors.password?.type === 'minLength' && (
+                <span className='text-red-400'>
+                  Password must be at least 6 characters!
+                </span>
+              )}
+              {errors.password?.type === 'pattern' && (
+                <span className='text-red-400'>
+                  Password must contain at least one uppercase, one lowercase
+                  letter, one digit and one special characters!
+                </span>
+              )}
+
+              {/* Form Submit */}
+              <button
+                type='submit'
+                disabled={isLoading}
+                className='btn btn-primary border-none text-dark mt-4'>
+                Register
+              </button>
+            </fieldset>
+          </form>
+          <p className=''>
+            Already have an account?{' '}
+            <Link
+              to='/auth/login'
+              state={location.state}
+              className='hover:underline hover:text-secondary underline sm:no-underline'>
+              Login
+            </Link>
+          </p>
+          <div className='text-center my-4'>Or</div>
+          {/* Google Login */}
+          <GoogleLogin title='Register with Google' />
+        </motion.div>
       </Container>
     </section>
   );
