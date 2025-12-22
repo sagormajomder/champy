@@ -6,7 +6,7 @@ import Container from './../../components/Container';
 const winners = [
   {
     id: 1,
-    name: 'Sarah Jenkins',
+    name: 'Jannatul Ferdous',
     category: 'UI Design Challenge',
     prize: '2,500',
     image: 'https://i.pravatar.cc/150?img=5',
@@ -17,7 +17,7 @@ const winners = [
   },
   {
     id: 2,
-    name: 'Marcus Chen',
+    name: 'Sagor Majomder',
     category: 'Full Stack Hackathon',
     prize: '10,000',
     image: 'https://i.pravatar.cc/150?img=11',
@@ -28,7 +28,7 @@ const winners = [
   },
   {
     id: 3,
-    name: 'Elena Rodriguez',
+    name: 'Fetema Mim',
     category: 'Digital Illustration',
     prize: '1,800',
     image: 'https://i.pravatar.cc/150?img=9',
