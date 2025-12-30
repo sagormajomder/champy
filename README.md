@@ -1,10 +1,12 @@
 # Champy - Challenge Yourself, Conquer the World
 
+![](./src/assets/project-screenshot.png)
+
 Champy is a dynamic contest platform designed to foster competition and skill development. It offers a user-friendly interface for participants to join various contests, track their progress on global leaderboards, and engage with a community of like-minded individuals. Built with modern web technologies, Champy ensures a seamless and responsive experience for all users.
 
 ## Table of Contents
 
-- [Features](#features)
+- [Key Features](#key-features)
 - [Technology Used](#technology-used)
 - [Run it Locally](#run-it-locally)
 - [Live URL](#live-url)
@@ -12,7 +14,7 @@ Champy is a dynamic contest platform designed to foster competition and skill de
 - [Extra Section](#extra-section)
 - [Connect With Me](#connect-with-me)
 
-## Features
+## Key Features
 
 - **User Authentication**: Secure login and registration using Firebase Auth.
 - **Browse Contests**: View a comprehensive list of available contests with tags and descriptions.
