@@ -62,11 +62,7 @@ const router = createBrowserRouter([
 
       {
         path: 'contest-details/:id',
-        element: (
-          <PrivateRoute>
-            <ContestDetailsPage />
-          </PrivateRoute>
-        ),
+        Component: ContestDetailsPage,
       },
 
       // Payment Pages
