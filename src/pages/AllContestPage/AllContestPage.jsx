@@ -14,43 +14,42 @@ export default function AllContestPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [search, setSearch] = useState('');
   const [sortOrder, setSortOrder] = useState('popular');
+  const [page, setPage] = useState(1);
+  const limit = 8;
   const axiosSecure = useAxiosSecure();
-  const { isPending, data: contests = [] } = useQuery({
-    queryKey: ['contests', 'confirmed', search],
+
+  const { isPending, data } = useQuery({
+    queryKey: [
+      'contests',
+      'confirmed',
+      search,
+      selectedCategory,
+      sortOrder,
+      page,
+    ],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/contests?status=confirmed&search=${search}`
+        `/contests?status=confirmed&search=${search}&page=${page}&limit=${limit}&category=${selectedCategory}&sort=${sortOrder}`
       );
       return res.data;
     },
+    keepPreviousData: true,
   });
 
-  const contestByCategory = contests.filter(contest => {
-    if (selectedCategory === 'all') {
-      return contest;
-    }
+  const contests = data?.contests || [];
+  const totalCount = data?.totalCount || 0;
+  const totalPages = Math.ceil(totalCount / limit);
 
-    return contest.contestType === selectedCategory;
-  });
-
-  const sortedContests = contestByCategory.toSorted((a, b) => {
-    if (sortOrder === 'upcoming') {
-      return new Date(a.contestDeadline) - new Date(b.contestDeadline);
+  const handlePageChange = newPage => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPage(newPage);
     }
-    if (sortOrder === 'price-asc') {
-      return Number(a.contestPrice) - Number(b.contestPrice);
-    }
-    if (sortOrder === 'price-desc') {
-      return Number(b.contestPrice) - Number(a.contestPrice);
-    }
-    return b.participatedCount - a.participatedCount;
-  });
+  };
 
-  // console.log(contests);
-  // console.log(contestByCategory);
-  // console.log(sortedContests);
-
-  // if (isPending) return <Loader />;
+  // Reset page when filters change
+  if (page > 1 && contests.length === 0 && !isPending && totalCount > 0) {
+    setPage(1);
+  }
 
   return (
     <section className='py-14 h-full'>
@@ -62,22 +61,56 @@ export default function AllContestPage() {
 
         {/* Search and Sort */}
         <div className='flex flex-col md:flex-row justify-between items-center gap-4'>
-          <SearchContest setSearch={setSearch} />
+          <SearchContest
+            setSearch={val => {
+              setSearch(val);
+              setPage(1);
+            }}
+          />
 
-          <ContestSort sortOrder={sortOrder} setSortOrder={setSortOrder} />
+          <ContestSort
+            sortOrder={sortOrder}
+            setSortOrder={val => {
+              setSortOrder(val);
+              setPage(1);
+            }}
+          />
         </div>
 
         {/* Contest Category */}
         <ContestCategories
-          contests={contests}
           selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
+          setSelectedCategory={val => {
+            setSelectedCategory(val);
+            setPage(1);
+          }}
         />
         {/* Contest Cards */}
         {isPending ? (
           <AllContestSkeleton />
         ) : (
-          <AllContest sortedContests={sortedContests} />
+          <AllContest sortedContests={contests} />
+        )}
+
+        {/* Pagination Controls */}
+        {!isPending && totalCount > limit && (
+          <div className='flex justify-center items-center gap-4 mt-8'>
+            <button
+              className='btn btn-sm btn-outline btn-primary'
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page === 1}>
+              Previous
+            </button>
+            <span className='text-sm font-medium'>
+              Page {page} of {totalPages}
+            </span>
+            <button
+              className='btn btn-sm btn-outline btn-primary'
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page === totalPages}>
+              Next
+            </button>
+          </div>
         )}
       </Container>
     </section>

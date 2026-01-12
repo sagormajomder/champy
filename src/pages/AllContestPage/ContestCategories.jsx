@@ -1,12 +1,9 @@
+import { contestCategories } from '../../utils/utils';
+
 export default function ContestCategories({
-  contests,
   selectedCategory,
   setSelectedCategory,
 }) {
-  const contestCategories = [
-    ...new Set(contests.map(contest => contest.contestType)),
-  ];
-
   return (
     <section className='flex flex-wrap justify-center items-center gap-2'>
       <div
@@ -19,16 +16,17 @@ export default function ContestCategories({
         {'All'.toUpperCase()}
       </div>
       {contestCategories.map((cate, i) => {
+        const value = cate.split(' ').join('_').toLowerCase();
         return (
           <div
             key={i}
             className={`badge cursor-pointer rounded-full ${
-              selectedCategory === cate
+              selectedCategory === value
                 ? 'badge-primary'
                 : 'badge-outline badge-primary'
             }`}
-            onClick={() => setSelectedCategory(cate)}>
-            {cate.split('_').join(' ').toUpperCase()}
+            onClick={() => setSelectedCategory(value)}>
+            {cate.toUpperCase()}
           </div>
         );
       })}
