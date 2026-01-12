@@ -1,7 +1,7 @@
 const SearchContest = ({ setSearch }) => {
   return (
     <div className='flex justify-center'>
-      <label className='input input-bordered flex items-center gap-2 w-full max-w-md'>
+      <label className='input input-bordered flex items-center gap-2 max-w-md'>
         <input
           type='text'
           className='grow'

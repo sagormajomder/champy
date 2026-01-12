@@ -1,7 +1,7 @@
 export default function ContestSort({ sortOrder, setSortOrder }) {
   return (
     <select
-      className='select select-bordered w-full md:w-auto'
+      className='select select-bordered max-w-sm'
       value={sortOrder}
       onChange={e => setSortOrder(e.target.value)}>
       <option value='popular'>Most Popular</option>
