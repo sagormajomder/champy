@@ -20,6 +20,7 @@ export default function LoginPage() {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -65,6 +66,16 @@ export default function LoginPage() {
       .finally(() => {
         setIsLoading(false);
       });
+  }
+
+  function handleDemoUserLogin() {
+    setValue('email', 'user@gmail.com', { shouldValidate: true });
+    setValue('password', 'User0%', { shouldValidate: true });
+  }
+
+  function handleDemoAdminLogin() {
+    setValue('email', 'admin@gmail.com', { shouldValidate: true });
+    setValue('password', 'Admin0%', { shouldValidate: true });
   }
 
   return (
@@ -152,12 +163,28 @@ export default function LoginPage() {
                 </Link>
               </div>
               {/* Form Submit */}
-              <button
-                type='submit'
-                disabled={isLoading}
-                className='btn btn-primary border-none text-dark mt-4'>
-                Login
-              </button>
+              <div className='flex flex-col gap-2'>
+                <button
+                  type='submit'
+                  disabled={isLoading}
+                  className='btn btn-primary border-none text-dark'>
+                  Login
+                </button>
+                <button
+                  type='button'
+                  onClick={() => handleDemoUserLogin()}
+                  disabled={isLoading}
+                  className='btn btn-primary btn-outline text-dark'>
+                  Demo Login (User)
+                </button>
+                <button
+                  type='button'
+                  onClick={() => handleDemoAdminLogin()}
+                  disabled={isLoading}
+                  className='btn btn-primary btn-outline text-dark'>
+                  Demo Login (Admin)
+                </button>
+              </div>
             </fieldset>
           </form>
           <p>
