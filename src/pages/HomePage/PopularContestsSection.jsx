@@ -5,6 +5,7 @@ import Container from '../../components/Container';
 import SectionTitle from '../../components/SectionTitle';
 import { useAxiosSecure } from '../../hooks/useAxiosSecure';
 import AllContest from '../AllContestPage/AllContest';
+import AllContestSkeleton from '../AllContestPage/AllContestSkeleton';
 
 export default function PopularContestsSection() {
   const axiosSecure = useAxiosSecure();
@@ -40,7 +41,11 @@ export default function PopularContestsSection() {
           viewport={{ once: true }}
           className='space-y-5'>
           {/* Contest Cards */}
-          <AllContest sortedContests={sortedContests.slice(0, 8)} />
+          {isPending ? (
+            <AllContestSkeleton count={8} />
+          ) : (
+            <AllContest sortedContests={sortedContests.slice(0, 8)} />
+          )}
           <div className='text-center'>
             <Link className='btn btn-primary' to='/contests'>
               View More

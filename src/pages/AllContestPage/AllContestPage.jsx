@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import Container from '../../components/Container';
-import Loader from '../../components/Loader';
 import SectionTitle from '../../components/SectionTitle';
 import { useAxiosSecure } from './../../hooks/useAxiosSecure';
 import AllContest from './AllContest';
+import AllContestSkeleton from './AllContestSkeleton';
 import ContestCategories from './ContestCategories';
 
 export default function AllContestPage() {
@@ -35,7 +35,7 @@ export default function AllContestPage() {
   // console.log(contestByCategory);
   // console.log(sortedContests);
 
-  if (isPending) return <Loader />;
+  // if (isPending) return <Loader />;
 
   return (
     <section className='py-14 h-full'>
@@ -51,7 +51,11 @@ export default function AllContestPage() {
           setSelectedCategory={setSelectedCategory}
         />
         {/* Contest Cards */}
-        <AllContest sortedContests={sortedContests} />
+        {isPending ? (
+          <AllContestSkeleton />
+        ) : (
+          <AllContest sortedContests={sortedContests} />
+        )}
       </Container>
     </section>
   );

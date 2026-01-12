@@ -31,7 +31,7 @@ export default function HeroBanner() {
   };
 
   return (
-    <section className='min-h-[65vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col items-center justify-center px-4 py-20 relative overflow-hidden'>
+    <section className='min-h-[50vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col items-center justify-center px-4 py-15 relative overflow-hidden'>
       {/* Decorative background elements */}
       <div className='absolute inset-0 opacity-20 z-0 pointer-events-none'>
         <div className='absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl'></div>

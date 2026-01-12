@@ -5,7 +5,7 @@ import WinnerAdvertiseSection from './WinnerAdvertiseSection';
 
 export default function HomePage() {
   return (
-    <div className='space-y-14'>
+    <div className='space-y-10'>
       <HeroBanner />
       <PopularContestsSection />
       <WinnerAdvertiseSection />
