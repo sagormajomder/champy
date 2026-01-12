@@ -7,11 +7,13 @@ import { useAxiosSecure } from './../../hooks/useAxiosSecure';
 import AllContest from './AllContest';
 import AllContestSkeleton from './AllContestSkeleton';
 import ContestCategories from './ContestCategories';
+import ContestSort from './ContestSort';
 import SearchContest from './SearchContest';
 
 export default function AllContestPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [search, setSearch] = useState('');
+  const [sortOrder, setSortOrder] = useState('popular');
   const axiosSecure = useAxiosSecure();
   const { isPending, data: contests = [] } = useQuery({
     queryKey: ['contests', 'confirmed', search],
@@ -31,9 +33,18 @@ export default function AllContestPage() {
     return contest.contestType === selectedCategory;
   });
 
-  const sortedContests = contestByCategory.toSorted(
-    (a, b) => b.participatedCount - a.participatedCount
-  );
+  const sortedContests = contestByCategory.toSorted((a, b) => {
+    if (sortOrder === 'upcoming') {
+      return new Date(a.contestDeadline) - new Date(b.contestDeadline);
+    }
+    if (sortOrder === 'price-asc') {
+      return Number(a.contestPrice) - Number(b.contestPrice);
+    }
+    if (sortOrder === 'price-desc') {
+      return Number(b.contestPrice) - Number(a.contestPrice);
+    }
+    return b.participatedCount - a.participatedCount;
+  });
 
   // console.log(contests);
   // console.log(contestByCategory);
@@ -49,8 +60,12 @@ export default function AllContestPage() {
           desc="Discover, participate, and win in the world's most creative challenges. From Design to writing, find your next big win."
         />
 
-        {/* Search */}
-        <SearchContest setSearch={setSearch} />
+        {/* Search and Sort */}
+        <div className='flex flex-col md:flex-row justify-between items-center gap-4'>
+          <SearchContest setSearch={setSearch} />
+
+          <ContestSort sortOrder={sortOrder} setSortOrder={setSortOrder} />
+        </div>
 
         {/* Contest Category */}
         <ContestCategories
