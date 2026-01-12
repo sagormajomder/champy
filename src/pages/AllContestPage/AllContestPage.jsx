@@ -7,14 +7,18 @@ import { useAxiosSecure } from './../../hooks/useAxiosSecure';
 import AllContest from './AllContest';
 import AllContestSkeleton from './AllContestSkeleton';
 import ContestCategories from './ContestCategories';
+import SearchContest from './SearchContest';
 
 export default function AllContestPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [search, setSearch] = useState('');
   const axiosSecure = useAxiosSecure();
   const { isPending, data: contests = [] } = useQuery({
-    queryKey: ['contests', 'confirmed'],
+    queryKey: ['contests', 'confirmed', search],
     queryFn: async () => {
-      const res = await axiosSecure.get('/contests?status=confirmed');
+      const res = await axiosSecure.get(
+        `/contests?status=confirmed&search=${search}`
+      );
       return res.data;
     },
   });
@@ -44,6 +48,10 @@ export default function AllContestPage() {
           title='Explore Contests'
           desc="Discover, participate, and win in the world's most creative challenges. From Design to writing, find your next big win."
         />
+
+        {/* Search */}
+        <SearchContest setSearch={setSearch} />
+
         {/* Contest Category */}
         <ContestCategories
           contests={contests}
