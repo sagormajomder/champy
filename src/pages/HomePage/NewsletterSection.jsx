@@ -1,8 +1,13 @@
 import { motion } from 'motion/react';
+import toast from 'react-hot-toast';
 import { FaEnvelope } from 'react-icons/fa';
 import Container from '../../components/Container';
 
 export default function NewsletterSection() {
+  function handleSubscribe(e) {
+    e.preventDefault();
+    toast.success('Successfully subscribe to the Newsletter ');
+  }
   return (
     <section className='py-24 bg-gradient-to-br from-primary to-secondary text-primary-content relative overflow-hidden'>
       {/* Background Shapes */}
@@ -29,7 +34,7 @@ export default function NewsletterSection() {
 
             <form
               className='flex flex-col sm:flex-row gap-3'
-              onSubmit={e => e.preventDefault()}>
+              onSubmit={handleSubscribe}>
               <input
                 type='email'
                 placeholder='Enter your email address'
