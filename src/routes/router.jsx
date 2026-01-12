@@ -184,6 +184,14 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+      {
+        path: 'admin-profile',
+        element: (
+          <AdminRoute>
+            <MyProfilePage />
+          </AdminRoute>
+        ),
+      },
       // Error Page
       {
         path: '*',
