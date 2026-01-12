@@ -167,6 +167,14 @@ const router = createBrowserRouter([
           </CreatorRoute>
         ),
       },
+      {
+        path: 'creator-profile',
+        element: (
+          <CreatorRoute>
+            <MyProfilePage />
+          </CreatorRoute>
+        ),
+      },
       // Admin Route
       {
         path: 'manage-users',

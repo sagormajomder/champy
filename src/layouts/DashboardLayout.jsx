@@ -149,6 +149,15 @@ export default function DashboardLayout() {
                     </span>
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to='/dashboard/creator-profile'
+                    className='is-drawer-close:tooltip is-drawer-close:tooltip-right'
+                    data-tip='My Profile'>
+                    <CgProfile className='text-xl' />
+                    <span className='is-drawer-close:hidden'>My Profile</span>
+                  </Link>
+                </li>
               </>
             )}
 
